@@ -1,1 +1,2250 @@
-test
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>신울산GA지점 설계팀장 활동 & 업적 분석 대시보드</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #f8fafc;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col">
+
+  <!-- Top Navigation Bar -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-sky-600 flex items-center justify-center text-white shadow-md shadow-sky-200 shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-base sm:text-xl font-bold text-slate-900 tracking-tight">신울산GA지점 설계팀장 활동 & 업적 현황</h1>
+            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] sm:text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 shrink-0">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>실시간 9월 진도
+            </span>
+          </div>
+          <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">데이터 원천: 신울산_설계팀장_활동관련.xlsx (정리 시트) | 업데이트: 2026-09-17 08:55</p>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="flex flex-wrap items-center gap-2">
+        <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 shadow-inner">
+          <label for="leaderSelect" class="text-xs font-semibold px-2 text-slate-600">설계팀장:</label>
+          <select id="leaderSelect" onchange="onLeaderChange(this.value)" class="bg-white text-xs sm:text-sm font-bold text-slate-800 border-0 rounded-lg py-1.5 pl-3 pr-7 shadow-sm focus:ring-2 focus:ring-sky-500 cursor-pointer">
+          </select>
+        </div>
+
+        <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200">
+          <button id="btnBojang" onclick="setMetricType('bojang')" class="px-3 py-1.5 text-xs font-bold rounded-lg shadow-sm bg-white text-sky-700 transition">
+            보장 실적
+          </button>
+          <button id="btnHealth" onclick="setMetricType('health')" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:text-slate-900 transition">
+            건강보험
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Contents -->
+  <main class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 flex-1 w-full space-y-5">
+
+    <!-- KPI Summary Grid (4분할 1줄 구성) -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+      <!-- KPI 1: 당월 실적 -->
+      <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+        <div class="flex items-center justify-between text-slate-500 mb-1.5">
+          <span class="text-xs font-semibold">9월 당월 실적</span>
+          <span class="p-1.5 bg-sky-50 text-sky-600 rounded-lg">
+            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </span>
+        </div>
+        <div id="kpiCurrentMonth" class="text-lg sm:text-2xl font-black text-slate-900 tracking-tight">0원</div>
+        <div id="kpiMoM" class="text-[11px] sm:text-xs mt-1.5 text-slate-500 flex items-center gap-1 font-medium">
+          <span>전월 대비</span>
+          <span class="font-bold text-rose-500">-</span>
+        </div>
+      </div>
+
+      <!-- KPI 2: 전월 Br. 가동률 -->
+      <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm">
+        <div class="flex items-center justify-between text-slate-500 mb-1.5">
+          <span class="text-xs font-semibold">전월 Br. 가동률</span>
+          <span class="p-1.5 bg-slate-100 text-slate-600 rounded-lg">
+            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </span>
+        </div>
+        <div class="flex items-baseline gap-1">
+          <span id="kpiPrevActiveAgenciesMain" class="text-lg sm:text-2xl font-black text-slate-900 tracking-tight">0 / 0Br.</span>
+          <span id="kpiPrevActiveRate" class="text-xs sm:text-sm font-bold text-slate-600">(0%)</span>
+        </div>
+        <div id="kpiPrevActiveSub" class="text-[11px] sm:text-xs mt-1.5 text-slate-500 font-medium">8월 실적 발생 Br.</div>
+      </div>
+
+      <!-- KPI 3: 당월 Br. 가동률 -->
+      <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm">
+        <div class="flex items-center justify-between text-slate-500 mb-1.5">
+          <span class="text-xs font-semibold">당월 Br. 가동률</span>
+          <span class="p-1.5 bg-sky-50 text-sky-600 rounded-lg">
+            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </span>
+        </div>
+        <div class="flex items-baseline gap-1">
+          <span id="kpiActiveAgenciesMain" class="text-lg sm:text-2xl font-black text-slate-900 tracking-tight">0 / 0Br.</span>
+          <span id="kpiActiveRate" class="text-xs sm:text-sm font-bold text-sky-600">(0%)</span>
+        </div>
+        <div id="kpiTotalVisitsSub" class="text-[11px] sm:text-xs mt-1.5 text-slate-500 font-medium">9월 실적 발생 Br.</div>
+      </div>
+
+      <!-- KPI 4: 활동 효율성 -->
+      <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm">
+        <div class="flex items-center justify-between text-slate-500 mb-1.5">
+          <span class="text-xs font-semibold">방문 1회당 평균 업적</span>
+          <span class="p-1.5 bg-indigo-50 text-indigo-600 rounded-lg">
+            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+          </span>
+        </div>
+        <div id="kpiEfficiency" class="text-lg sm:text-2xl font-black text-indigo-700 tracking-tight">0원</div>
+        <div class="text-[11px] sm:text-xs mt-1.5 text-slate-500 font-medium">활동 대비 실적 전환율</div>
+      </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+      <!-- Chart 1: 추이 비교 (줌 차단 fixedrange 적용) -->
+      <div class="lg:col-span-12 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-3 border-b border-slate-100 gap-2">
+          <div>
+            <h2 class="text-sm sm:text-base font-bold text-slate-900 flex items-center gap-2">
+              <span>📊 대리점별 최근 4개월 실적 추이 비교</span>
+              <span id="chartMetricTag" class="text-[10px] sm:text-[11px] px-2 py-0.5 rounded-md bg-sky-50 text-sky-700 font-bold border border-sky-200">보장 기준</span>
+            </h2>
+            <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">6월 → 7월 → 8월 → 9월 실적 변동 현황</p>
+          </div>
+          <div class="flex items-center space-x-2 text-[11px] sm:text-xs font-medium">
+            <span class="inline-flex items-center gap-1 text-slate-500"><span class="w-2 h-2 rounded-sm bg-slate-300"></span>6월</span>
+            <span class="inline-flex items-center gap-1 text-slate-500"><span class="w-2 h-2 rounded-sm bg-sky-200"></span>7월</span>
+            <span class="inline-flex items-center gap-1 text-slate-500"><span class="w-2 h-2 rounded-sm bg-sky-400"></span>8월</span>
+            <span class="inline-flex items-center gap-1 font-bold text-sky-900"><span class="w-2 h-2 rounded-sm bg-sky-700"></span>9월</span>
+          </div>
+        </div>
+        <div id="chartMonthlyBar" class="w-full h-[320px] sm:h-[380px] pt-2"></div>
+      </div>
+
+      <!-- Chart 2: Scatter (줌 차단 fixedrange 적용) -->
+      <div class="lg:col-span-8 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+          <div>
+            <h2 class="text-sm sm:text-base font-bold text-slate-900">🎯 방문 활동(횟수) vs 당월 실적 매트릭스</h2>
+            <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">대리점 방문 집중도 대비 실적 효율성 분석</p>
+          </div>
+          <span class="text-[10px] sm:text-xs px-2 py-1 bg-amber-50 text-amber-800 rounded-lg font-bold border border-amber-200">활동 효율</span>
+        </div>
+        <div id="chartScatter" class="w-full h-[300px] sm:h-[360px] pt-2"></div>
+      </div>
+
+      <!-- Chart 3: Donut -->
+      <div class="lg:col-span-4 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col">
+        <div class="pb-3 border-b border-slate-100">
+          <h2 class="text-sm sm:text-base font-bold text-slate-900">📑 분류별 당월 실적 비중</h2>
+          <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">핵심 / 전략 / 개별 대리점 실적 점유율</p>
+        </div>
+        <div id="chartClassification" class="w-full flex-1 min-h-[280px] sm:min-h-[320px]"></div>
+      </div>
+    </div>
+
+    <!-- Detailed Agency Table (모바일 가로 스크롤 & 글자 깨짐 방지) -->
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+      <div class="p-3.5 sm:p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/60">
+        <div>
+          <div class="flex items-center gap-2">
+            <h3 class="text-sm sm:text-base font-bold text-slate-900 flex items-center gap-2">
+              <span>📋 대리점별 상세 활동 및 실적 원장</span>
+              <span id="tableRowCount" class="text-xs px-2 py-0.5 bg-slate-200 text-slate-700 rounded-full font-bold">0개처</span>
+            </h3>
+          </div>
+          <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5 flex items-center gap-1">
+            <span>9월 실적순 정렬</span>
+            <span class="text-sky-600 font-semibold sm:hidden">• 👉 좌우로 스크롤하여 전체 실적 확인</span>
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="relative flex-1 sm:flex-initial">
+            <input type="text" id="agencySearchInput" oninput="filterTable()" placeholder="대리점명 검색..." class="text-xs pl-8 pr-3 py-1.5 sm:py-2 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 bg-white w-full sm:w-48 shadow-sm">
+            <svg class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          </div>
+          <button onclick="exportToCsv()" class="text-xs px-3 py-1.5 sm:py-2 bg-white hover:bg-slate-50 border border-slate-300 rounded-xl text-slate-700 font-bold flex items-center gap-1.5 transition shadow-sm shrink-0">
+            <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            <span class="hidden sm:inline">CSV 다운로드</span>
+            <span class="sm:hidden">다운로드</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- min-w-[840px] 및 whitespace-nowrap 적용으로 글자 쪼개짐 원천 차단 -->
+      <div class="overflow-x-auto custom-scrollbar w-full">
+        <table class="w-full min-w-[840px] text-left border-collapse text-xs">
+          <thead>
+            <tr class="bg-slate-100/80 border-b border-slate-200 text-slate-600 font-bold whitespace-nowrap">
+              <th class="py-3 px-3.5 text-left">대리점명</th>
+              <th class="py-3 px-2 text-center">구분</th>
+              <th class="py-3 px-2 text-center">분류</th>
+              <th class="py-3 px-2.5 text-center">기관코드</th>
+              <th class="py-3 px-3 text-center">최종활동</th>
+              <th class="py-3 px-2.5 text-center">활동횟수</th>
+              <th class="py-3 px-3 text-right">6월 실적</th>
+              <th class="py-3 px-3 text-right">7월 실적</th>
+              <th class="py-3 px-3 text-right">8월 실적</th>
+              <th class="py-3 px-3.5 text-right font-extrabold text-sky-900 bg-sky-50/70">9월(당월)</th>
+              <th class="py-3 px-3 text-center">활동 상태</th>
+            </tr>
+          </thead>
+          <tbody id="agencyTableBody" class="divide-y divide-slate-100 whitespace-nowrap">
+          </tbody>
+          <tfoot id="agencyTableFoot" class="bg-slate-50 font-bold border-t-2 border-slate-300 whitespace-nowrap">
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    const rawDataset = {
+  "차은미": {
+    "role": "차은미 설계팀장",
+    "agencies": [
+      {
+        "name": "GAK뉴에이스점",
+        "code": "5477",
+        "type": "E",
+        "class": "핵심",
+        "lastDate": "9월 8일",
+        "visits": 1,
+        "bojang": [
+          843520.0,
+          571730.0,
+          106330.0,
+          0.0
+        ],
+        "health": [
+          423520.0,
+          119730.0,
+          106330.0,
+          0.0
+        ]
+      },
+      {
+        "name": "GAK웰스투게더점",
+        "code": "19366",
+        "type": "M",
+        "class": "핵심",
+        "lastDate": "9월 7일",
+        "visits": 1,
+        "bojang": [
+          274446.0,
+          152940.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          274446.0,
+          152940.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "GAK위드동행울산점",
+        "code": "16331",
+        "type": "E",
+        "class": "핵심",
+        "lastDate": "9월 8일",
+        "visits": 1,
+        "bojang": [
+          389160.0,
+          335574.0,
+          61610.0,
+          129831.0
+        ],
+        "health": [
+          89160.0,
+          235574.0,
+          61610.0,
+          129831.0
+        ]
+      },
+      {
+        "name": "GAK창솔점",
+        "code": "11905",
+        "type": "M",
+        "class": "핵심",
+        "lastDate": "9월 10일",
+        "visits": 2,
+        "bojang": [
+          1079783.0,
+          4122635.0,
+          1823521.0,
+          2453560.0
+        ],
+        "health": [
+          729783.0,
+          622635.0,
+          123521.0,
+          303560.0
+        ]
+      },
+      {
+        "name": "GAK혜안점",
+        "code": "5476",
+        "type": "M",
+        "class": "핵심",
+        "lastDate": "9월 14일",
+        "visits": 2,
+        "bojang": [
+          1064705.0,
+          967044.0,
+          2718236.0,
+          2138113.0
+        ],
+        "health": [
+          164705.0,
+          367044.0,
+          218236.0,
+          38113.0
+        ]
+      },
+      {
+        "name": "메타리치시온점",
+        "code": "18621",
+        "type": "K",
+        "class": "전략",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "메타리치울산점",
+        "code": "20065",
+        "type": "C",
+        "class": "전략",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          47055.0,
+          290801.0,
+          0.0,
+          66847.0
+        ],
+        "health": [
+          47055.0,
+          83841.0,
+          0.0,
+          66847.0
+        ]
+      },
+      {
+        "name": "아너스금융서비스문수점",
+        "code": "05403",
+        "type": "C",
+        "class": "핵심",
+        "lastDate": "9월 15일",
+        "visits": 4,
+        "bojang": [
+          331344.0,
+          301412.0,
+          210435.0,
+          173630.0
+        ],
+        "health": [
+          331344.0,
+          301412.0,
+          210435.0,
+          173630.0
+        ]
+      },
+      {
+        "name": "아너스금융서비스신명점",
+        "code": "5588",
+        "type": "E",
+        "class": "핵심",
+        "lastDate": "9월 15일",
+        "visits": 4,
+        "bojang": [
+          223221.0,
+          195743.0,
+          437241.0,
+          361520.0
+        ],
+        "health": [
+          223221.0,
+          195743.0,
+          177241.0,
+          61520.0
+        ]
+      },
+      {
+        "name": "에이원금융판매다온점",
+        "code": "19493",
+        "type": "C",
+        "class": "전략",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          556557.0,
+          121477.0,
+          112067.0,
+          158064.0
+        ],
+        "health": [
+          556557.0,
+          121477.0,
+          112067.0,
+          158064.0
+        ]
+      },
+      {
+        "name": "에이원금융판매헷지자산관리점",
+        "code": "17567",
+        "type": "S",
+        "class": "전략",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "유퍼스트울산중앙점",
+        "code": "11482",
+        "type": "E",
+        "class": "핵심",
+        "lastDate": "9월 15일",
+        "visits": 2,
+        "bojang": [
+          542971.0,
+          267947.0,
+          306869.0,
+          35158.0
+        ],
+        "health": [
+          142971.0,
+          267947.0,
+          56869.0,
+          35158.0
+        ]
+      },
+      {
+        "name": "케이지에이에셋태형점",
+        "code": "12464",
+        "type": "M",
+        "class": "핵심",
+        "lastDate": "9월 16일",
+        "visits": 6,
+        "bojang": [
+          4840343.0,
+          3201257.0,
+          3745056.0,
+          2312877.0
+        ],
+        "health": [
+          1434453.0,
+          2481797.0,
+          1245056.0,
+          412877.0
+        ]
+      },
+      {
+        "name": "프라임에셋울산18점",
+        "code": "18538",
+        "type": "K",
+        "class": "전략",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          54537.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          54537.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "더베스트금융서비스글로벌울산드림",
+        "code": "21667",
+        "type": "",
+        "class": "일반",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          120912.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          120912.0
+        ]
+      }
+    ]
+  },
+  "김서현": {
+    "role": "김서현 설계팀장",
+    "agencies": [
+      {
+        "name": "GAK씨엔원영남점",
+        "code": "17566",
+        "type": "C",
+        "class": "핵심",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "GAK아이에프에스제이점",
+        "code": "20574",
+        "type": "C",
+        "class": "핵심",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          901590.0,
+          644744.0,
+          1004149.0,
+          647184.0
+        ],
+        "health": [
+          901590.0,
+          644744.0,
+          1004149.0,
+          647184.0
+        ]
+      },
+      {
+        "name": "GAK아이에프아이에스점",
+        "code": "19968",
+        "type": "E",
+        "class": "핵심",
+        "lastDate": "9월 16일",
+        "visits": 4,
+        "bojang": [
+          1344567.0,
+          2107001.0,
+          5551838.0,
+          590609.0
+        ],
+        "health": [
+          1244567.0,
+          1107001.0,
+          1251838.0,
+          590609.0
+        ]
+      },
+      {
+        "name": "글로벌금융판매드림재무점",
+        "code": "08032",
+        "type": "M",
+        "class": "전략",
+        "lastDate": "9월 16일",
+        "visits": 5,
+        "bojang": [
+          2004167.0,
+          2370945.0,
+          2764375.0,
+          841594.0
+        ],
+        "health": [
+          1404167.0,
+          1770945.0,
+          1044375.0,
+          41594.0
+        ]
+      },
+      {
+        "name": "글로벌금융판매바모스울산점",
+        "code": "19294",
+        "type": "S",
+        "class": "전략",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          153280.0,
+          0.0,
+          21765.0,
+          176227.0
+        ],
+        "health": [
+          153280.0,
+          0.0,
+          21764.0,
+          176227.0
+        ]
+      },
+      {
+        "name": "글로벌금융판매오에스케이더플러스점",
+        "code": "18902",
+        "type": "S",
+        "class": "개별",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "글로벌금융판매오에스케이비오비점",
+        "code": "18901",
+        "type": "S",
+        "class": "개별",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          37487.0,
+          0.0,
+          186457.0,
+          0.0
+        ],
+        "health": [
+          37487.0,
+          0.0,
+          36457.0,
+          0.0
+        ]
+      },
+      {
+        "name": "글로벌금융판매오에스케이울산점",
+        "code": "12144",
+        "type": "K",
+        "class": "개별",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "글로벌금융판매케이스타점",
+        "code": "16015",
+        "type": "C",
+        "class": "전략",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          107777.0,
+          30415.0,
+          300000.0,
+          0.0
+        ],
+        "health": [
+          107777.0,
+          30415.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "삼성금융파트너부산지점",
+        "code": "21124",
+        "type": "",
+        "class": "일반",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          403724.0,
+          2099790.0,
+          3000000.0,
+          1537906.0
+        ],
+        "health": [
+          403724.0,
+          99790.0,
+          0.0,
+          37906.0
+        ]
+      },
+      {
+        "name": "아너스금융서비스리더스점",
+        "code": "19365",
+        "type": "K",
+        "class": "핵심",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "아너스금융서비스울산점",
+        "code": "16938",
+        "type": "C",
+        "class": "핵심",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          117204.0,
+          102054.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          117204.0,
+          102054.0,
+          0.0
+        ]
+      },
+      {
+        "name": "아이에프씨웅상점",
+        "code": "13157",
+        "type": "M",
+        "class": "개별",
+        "lastDate": "9월 14일",
+        "visits": 1,
+        "bojang": [
+          1154114.0,
+          22846849.0,
+          4153418.0,
+          1392674.0
+        ],
+        "health": [
+          454114.0,
+          26849.0,
+          136418.0,
+          92674.0
+        ]
+      },
+      {
+        "name": "영진에셋성공점",
+        "code": "14781",
+        "type": "E",
+        "class": "개별",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          401203.0,
+          64710.0,
+          100204.0,
+          2131269.0
+        ],
+        "health": [
+          201203.0,
+          64710.0,
+          100204.0,
+          111829.0
+        ]
+      },
+      {
+        "name": "유퍼스트나우점",
+        "code": "08109",
+        "type": "S",
+        "class": "핵심",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          300000.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "유퍼스트울산점",
+        "code": "12859",
+        "type": "E",
+        "class": "핵심",
+        "lastDate": "9월 7일",
+        "visits": 1,
+        "bojang": [
+          179658.0,
+          331357.0,
+          210705.0,
+          480862.0
+        ],
+        "health": [
+          179658.0,
+          131357.0,
+          210705.0,
+          180862.0
+        ]
+      },
+      {
+        "name": "피플라이프울산법인점",
+        "code": "17201",
+        "type": "M",
+        "class": "개별",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          1350000.0,
+          0.0,
+          250000.0,
+          350000.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    ]
+  },
+  "김혜진": {
+    "role": "김혜진 설계팀장",
+    "agencies": [
+      {
+        "name": "GAK다해에셋점",
+        "code": "16289",
+        "type": "E",
+        "class": "핵심",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          1301704.0,
+          48419.0,
+          34912.0,
+          104365.0
+        ],
+        "health": [
+          1301704.0,
+          48419.0,
+          34912.0,
+          104365.0
+        ]
+      },
+      {
+        "name": "굿리치웅상점",
+        "code": "19063",
+        "type": "S",
+        "class": "개별",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "글로벌금융판매오에스케이목련",
+        "code": "21305",
+        "type": "",
+        "class": "일반",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          80402.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          80402.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "글로벌금융판매오에스케이양산점",
+        "code": "12705",
+        "type": "S",
+        "class": "개별",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          100000.0,
+          52798.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          100000.0,
+          52798.0
+        ]
+      },
+      {
+        "name": "글로벌금융판매케이에스두레울산평강점",
+        "code": "20488",
+        "type": "K",
+        "class": "전략",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "삼성금융파트너스울산지점",
+        "code": "21126",
+        "type": "",
+        "class": "일반",
+        "lastDate": "9월 8일",
+        "visits": 2,
+        "bojang": [
+          6285037.0,
+          5070244.0,
+          1066670.0,
+          8129073.0
+        ],
+        "health": [
+          257637.0,
+          42844.0,
+          31070.0,
+          86873.0
+        ]
+      },
+      {
+        "name": "스카이블루에셋남양산점",
+        "code": "14830",
+        "type": "M",
+        "class": "개별",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          4230977.0,
+          3783690.0,
+          4571099.0,
+          3846359.0
+        ],
+        "health": [
+          310977.0,
+          223690.0,
+          90099.0,
+          276359.0
+        ]
+      },
+      {
+        "name": "아너스금융서비스경상점",
+        "code": "16939",
+        "type": "S",
+        "class": "핵심",
+        "lastDate": "9월 4일",
+        "visits": 1,
+        "bojang": [
+          53936.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          53936.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "아이에프씨양산점",
+        "code": "12481",
+        "type": "M",
+        "class": "개별",
+        "lastDate": "9월 7일",
+        "visits": 1,
+        "bojang": [
+          7122945.0,
+          3156017.0,
+          4026667.0,
+          3507933.0
+        ],
+        "health": [
+          567945.0,
+          956017.0,
+          1126667.0,
+          105323.0
+        ]
+      },
+      {
+        "name": "엠금융서비스다온점",
+        "code": "14392",
+        "type": "C",
+        "class": "개별",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "엠금융서비스월드에셋점",
+        "code": "14235",
+        "type": "K",
+        "class": "개별",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          168062.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          168062.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "영진에셋신울산점",
+        "code": "11048",
+        "type": "C",
+        "class": "개별",
+        "lastDate": "9월 16일",
+        "visits": 2,
+        "bojang": [
+          0.0,
+          0.0,
+          124266.0,
+          81328.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          74266.0,
+          81328.0
+        ]
+      },
+      {
+        "name": "케이지에이에셋더블유지유",
+        "code": "21310",
+        "type": "",
+        "class": "일반",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "케이지에이에셋문수점",
+        "code": "08257",
+        "type": "E",
+        "class": "핵심",
+        "lastDate": "9월 15일",
+        "visits": 5,
+        "bojang": [
+          146020.0,
+          741641.0,
+          381470.0,
+          231941.0
+        ],
+        "health": [
+          146020.0,
+          241641.0,
+          381470.0,
+          131941.0
+        ]
+      },
+      {
+        "name": "프라임에셋울산13점",
+        "code": "15147",
+        "type": "K",
+        "class": "전략",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          423656.0,
+          100000.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          123656.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "하나금융파인드울산점",
+        "code": "18294",
+        "type": "K",
+        "class": "-",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "글로벌금융판매리치앤아이울산엠씨지사점",
+        "code": "21552",
+        "type": "",
+        "class": "일반",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    ]
+  },
+  "전현주": {
+    "role": "전현주 설계팀장",
+    "agencies": [
+      {
+        "name": "GAK플래쉬",
+        "code": "16423",
+        "type": "E",
+        "class": "핵심",
+        "lastDate": "9월 16일",
+        "visits": 2,
+        "bojang": [
+          768271.0,
+          206537.0,
+          439826.0,
+          50964.0
+        ],
+        "health": [
+          308271.0,
+          106537.0,
+          139826.0,
+          50964.0
+        ]
+      },
+      {
+        "name": "GAK하람점",
+        "code": "16290",
+        "type": "E",
+        "class": "핵심",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          700000.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "글로벌금융판매오에스케이울산위드점",
+        "code": "15668",
+        "type": "C",
+        "class": "개별",
+        "lastDate": "9월 8일",
+        "visits": 1,
+        "bojang": [
+          0.0,
+          94599.0,
+          348991.0,
+          33475.0
+        ],
+        "health": [
+          0.0,
+          94599.0,
+          348991.0,
+          33475.0
+        ]
+      },
+      {
+        "name": "글로벌금융판매케이화이트점",
+        "code": "15773",
+        "type": "C",
+        "class": "전략",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          110580.0,
+          1134675.0,
+          20752.0
+        ],
+        "health": [
+          0.0,
+          110580.0,
+          134675.0,
+          20752.0
+        ]
+      },
+      {
+        "name": "글로벌금융판매케이화이트일본부점",
+        "code": "20061",
+        "type": "C",
+        "class": "전략",
+        "lastDate": "9월 14일",
+        "visits": 1,
+        "bojang": [
+          352198.0,
+          404311.0,
+          321419.0,
+          330011.0
+        ],
+        "health": [
+          352198.0,
+          404311.0,
+          321419.0,
+          330011.0
+        ]
+      },
+      {
+        "name": "삼성금융파트너스김해지점",
+        "code": "21125",
+        "type": "",
+        "class": "개별",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          37751.0,
+          51499.0,
+          209848.0,
+          255422.0
+        ],
+        "health": [
+          37751.0,
+          51499.0,
+          209848.0,
+          255422.0
+        ]
+      },
+      {
+        "name": "메트라이프금융서비스대원점",
+        "code": "15831",
+        "type": "E",
+        "class": "전략",
+        "lastDate": "9월 15일",
+        "visits": 4,
+        "bojang": [
+          749507.0,
+          294854.0,
+          0.0,
+          101245.0
+        ],
+        "health": [
+          749507.0,
+          294854.0,
+          0.0,
+          101245.0
+        ]
+      },
+      {
+        "name": "스카이블루에셋양산점",
+        "code": "14829",
+        "type": "M",
+        "class": "개별",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          9685869.0,
+          3453010.0,
+          16601544.0,
+          3317488.0
+        ],
+        "health": [
+          817869.0,
+          193010.0,
+          101544.0,
+          297488.0
+        ]
+      },
+      {
+        "name": "스카이블루에셋웅상점",
+        "code": "14831",
+        "type": "M",
+        "class": "개별",
+        "lastDate": "9월 10일",
+        "visits": 2,
+        "bojang": [
+          8519410.0,
+          5590417.0,
+          5195822.0,
+          3414410.0
+        ],
+        "health": [
+          719410.0,
+          706117.0,
+          485822.0,
+          674410.0
+        ]
+      },
+      {
+        "name": "에이비에이금융서비스울산지사점",
+        "code": "20494",
+        "type": "K",
+        "class": "전략",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          80643.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          80643.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "지에이스타금융서비스에스지에이점",
+        "code": "16394",
+        "type": "M",
+        "class": "핵심",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          542024.0,
+          390193.0,
+          222742.0,
+          275489.0
+        ],
+        "health": [
+          114024.0,
+          190193.0,
+          169882.0,
+          75489.0
+        ]
+      },
+      {
+        "name": "케이지에이에셋울산점",
+        "code": "14052",
+        "type": "M",
+        "class": "핵심",
+        "lastDate": "9월 14일",
+        "visits": 1,
+        "bojang": [
+          39074.0,
+          694091.0,
+          605667.0,
+          165990.0
+        ],
+        "health": [
+          39074.0,
+          194091.0,
+          105667.0,
+          165990.0
+        ]
+      },
+      {
+        "name": "케이지에이에셋튼튼점",
+        "code": "17360",
+        "type": "E",
+        "class": "핵심",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "프라임에셋울산16점",
+        "code": "17044",
+        "type": "E",
+        "class": "전략",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          77758.0,
+          0.0,
+          382626.0,
+          226886.0
+        ],
+        "health": [
+          77758.0,
+          0.0,
+          382626.0,
+          226886.0
+        ]
+      },
+      {
+        "name": "프라임에셋울산1점",
+        "code": "07296",
+        "type": "S",
+        "class": "전략",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          100000.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "한국보험금융제이어스울산지점",
+        "code": "21396",
+        "type": "",
+        "class": "개별",
+        "lastDate": "9월 9일",
+        "visits": 1,
+        "bojang": [
+          0,
+          1301206.0,
+          748893.0,
+          154443.0
+        ],
+        "health": [
+          0,
+          801206.0,
+          248893.0,
+          154443.0
+        ]
+      },
+      {
+        "name": "피플라이프울산브이아이피점",
+        "code": "14615",
+        "type": "M",
+        "class": "개별",
+        "lastDate": "9월 14일",
+        "visits": 3,
+        "bojang": [
+          2641095.0,
+          795116.0,
+          2116850.0,
+          140843.0
+        ],
+        "health": [
+          341095.0,
+          395116.0,
+          216850.0,
+          140843.0
+        ]
+      },
+      {
+        "name": "더베스트금융서비스유니온재무설계",
+        "code": "21668",
+        "type": "",
+        "class": "일반",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          139287.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          139287.0
+        ]
+      }
+    ]
+  },
+  "강리안": {
+    "role": "강리안 설계팀장",
+    "agencies": [
+      {
+        "name": "GAK화정울산점",
+        "code": "13486",
+        "type": "S",
+        "class": "핵심",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "글로벌금융판매웰스베스트점",
+        "code": "18443",
+        "type": "K",
+        "class": "전략",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "더베스트금융서비스양산재무설계점",
+        "code": "19797",
+        "type": "S",
+        "class": "전략",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "메타리치시그널9본부점",
+        "code": "19792",
+        "type": "E",
+        "class": "전략",
+        "lastDate": "9월 16일",
+        "visits": 6,
+        "bojang": [
+          39606.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          39606.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "에이플러스에셋어드바이저영남골드점",
+        "code": "18455",
+        "type": "C",
+        "class": "전략",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          335524.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          135524.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "메타리치위너점",
+        "code": "19790",
+        "type": "K",
+        "class": "전략",
+        "lastDate": "9월 16일",
+        "visits": 5,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          169348.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          169348.0
+        ]
+      },
+      {
+        "name": "메타리치컴패니언양산점",
+        "code": "18616",
+        "type": "C",
+        "class": "전략",
+        "lastDate": "9월 14일",
+        "visits": 4,
+        "bojang": [
+          96470.0,
+          45330.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          96470.0,
+          45330.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "사랑모아금융서비스양산점",
+        "code": "15696",
+        "type": "M",
+        "class": "개별",
+        "lastDate": "9월 9일",
+        "visits": 1,
+        "bojang": [
+          2055200.0,
+          3098147.0,
+          1599897.0,
+          177638.0
+        ],
+        "health": [
+          110200.0,
+          238147.0,
+          199897.0,
+          177638.0
+        ]
+      },
+      {
+        "name": "밸류마크양산점",
+        "code": "13068",
+        "type": "S",
+        "class": "개별",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "삼성화재금융서비스더프라임파트너점",
+        "code": "20373",
+        "type": "E",
+        "class": "전략",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          747298.0,
+          0.0,
+          266735.0,
+          63620.0
+        ],
+        "health": [
+          747298.0,
+          0.0,
+          266735.0,
+          63620.0
+        ]
+      },
+      {
+        "name": "엠금융서비스울산점",
+        "code": "18537",
+        "type": "K",
+        "class": "개별",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "영진에셋양산점",
+        "code": "02488",
+        "type": "E",
+        "class": "개별",
+        "lastDate": "9월 10일",
+        "visits": 2,
+        "bojang": [
+          0.0,
+          234826.0,
+          82509.0,
+          1443699.0
+        ],
+        "health": [
+          0.0,
+          234826.0,
+          82509.0,
+          143699.0
+        ]
+      },
+      {
+        "name": "지에이스타금융서비스아이스마트점",
+        "code": "17474",
+        "type": "E",
+        "class": "핵심",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          600000.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "케이지에이에셋방주양산점",
+        "code": "11795",
+        "type": "C",
+        "class": "핵심",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "케이지에이에셋성산점",
+        "code": "15177",
+        "type": "S",
+        "class": "핵심",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "프라임에셋울산14점",
+        "code": "17051",
+        "type": "K",
+        "class": "전략",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "프라임에셋울산17점",
+        "code": "17052",
+        "type": "K",
+        "class": "전략",
+        "lastDate": "-",
+        "visits": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    ]
+  }
+};
+    let currentLeader = Object.keys(rawDataset)[0] || "";
+    let currentMetric = "bojang";
+
+    function initLeaderOptions() {
+      const select = document.getElementById('leaderSelect');
+      select.innerHTML = '';
+      Object.keys(rawDataset).forEach(leader => {
+        const opt = document.createElement('option');
+        opt.value = leader;
+        opt.textContent = leader + ' 설계팀장';
+        if (leader === currentLeader) opt.selected = true;
+        select.appendChild(opt);
+      });
+    }
+
+    function formatWon(num) {
+      if (!num || isNaN(num)) return "0원";
+      return Math.round(num).toLocaleString('ko-KR') + "원";
+    }
+
+    function setMetricType(metric) {
+      currentMetric = metric;
+      const btnBojang = document.getElementById('btnBojang');
+      const btnHealth = document.getElementById('btnHealth');
+      const tag = document.getElementById('chartMetricTag');
+
+      if (metric === 'bojang') {
+        btnBojang.className = "px-3 py-1.5 text-xs font-bold rounded-lg shadow-sm bg-white text-sky-700 transition";
+        btnHealth.className = "px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:text-slate-900 transition";
+        tag.textContent = "보장 기준";
+      } else {
+        btnHealth.className = "px-3 py-1.5 text-xs font-bold rounded-lg shadow-sm bg-white text-sky-700 transition";
+        btnBojang.className = "px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:text-slate-900 transition";
+        tag.textContent = "건강보험 기준";
+      }
+      updateDashboard();
+    }
+
+    function onLeaderChange(leader) {
+      currentLeader = leader;
+      updateDashboard();
+    }
+
+    function updateDashboard() {
+      const data = rawDataset[currentLeader];
+      if (!data) return;
+
+      const agencies = data.agencies;
+      
+      let totalM9 = 0, totalM8 = 0, totalVisits = 0;
+      let currActiveCount = 0;
+      let prevActiveCount = 0;
+
+      agencies.forEach(a => {
+        const vals = a[currentMetric];
+        const m8Val = vals[2];
+        const m9Val = vals[3];
+
+        totalM9 += m9Val;
+        totalM8 += m8Val;
+        totalVisits += a.visits;
+
+        if (m9Val > 0) currActiveCount++;
+        if (m8Val > 0) prevActiveCount++;
+      });
+
+      document.getElementById('kpiCurrentMonth').textContent = formatWon(totalM9);
+      const momDiff = totalM9 - totalM8;
+      const momPct = totalM8 > 0 ? ((momDiff / totalM8) * 100).toFixed(1) : (totalM9 > 0 ? 100 : 0);
+      const momEl = document.getElementById('kpiMoM');
+      if (momDiff >= 0) {
+        momEl.innerHTML = `전월 대비 <span class="font-bold text-emerald-600 flex items-center">▲ ${formatWon(momDiff)} (+${momPct}%)</span>`;
+      } else {
+        momEl.innerHTML = `전월 대비 <span class="font-bold text-rose-600 flex items-center">▼ ${formatWon(Math.abs(momDiff))} (${momPct}%)</span>`;
+      }
+
+      // 전월 Br. 가동률
+      const prevActiveRate = agencies.length > 0 ? Math.round((prevActiveCount / agencies.length) * 100) : 0;
+      document.getElementById('kpiPrevActiveAgenciesMain').textContent = `${prevActiveCount} / ${agencies.length}Br.`;
+      document.getElementById('kpiPrevActiveRate').textContent = `(${prevActiveRate}%)`;
+      document.getElementById('kpiPrevActiveSub').textContent = `8월 실적 발생 Br. (담당 ${agencies.length}Br. 중)`;
+
+      // 당월 Br. 가동률
+      const activeRate = agencies.length > 0 ? Math.round((currActiveCount / agencies.length) * 100) : 0;
+      document.getElementById('kpiActiveAgenciesMain').textContent = `${currActiveCount} / ${agencies.length}Br.`;
+      document.getElementById('kpiActiveRate').textContent = `(${activeRate}%)`;
+      document.getElementById('kpiTotalVisitsSub').textContent = `9월 실적 발생 Br. (총 방문 ${totalVisits}회)`;
+
+      const efficiency = totalVisits > 0 ? totalM9 / totalVisits : totalM9;
+      document.getElementById('kpiEfficiency').textContent = formatWon(efficiency);
+
+      renderCharts(agencies);
+      renderTable(agencies);
+    }
+
+    function renderCharts(agencies) {
+      const sorted = [...agencies].sort((a, b) => b[currentMetric][3] - a[currentMetric][3]);
+      
+      const agencyNames = sorted.map(a => a.name);
+      const m6Vals = sorted.map(a => a[currentMetric][0]);
+      const m7Vals = sorted.map(a => a[currentMetric][1]);
+      const m8Vals = sorted.map(a => a[currentMetric][2]);
+      const m9Vals = sorted.map(a => a[currentMetric][3]);
+
+      // 1. Grouped Bar: fixedrange로 스마트폰 터치 시 강제 확대 원천 차단
+      const barTraces = [
+        { x: agencyNames, y: m6Vals, name: '6월', type: 'bar', marker: { color: '#cbd5e1' } },
+        { x: agencyNames, y: m7Vals, name: '7월', type: 'bar', marker: { color: '#bae6fd' } },
+        { x: agencyNames, y: m8Vals, name: '8월', type: 'bar', marker: { color: '#38bdf8' } },
+        { x: agencyNames, y: m9Vals, name: '9월(당월)', type: 'bar', marker: { color: '#0369a1' } }
+      ];
+
+      const barLayout = {
+        barmode: 'group',
+        dragmode: false, // 줌인 드래그 비활성화
+        margin: { l: 55, r: 15, t: 15, b: 80 },
+        legend: { orientation: 'h', y: 1.15, x: 0 },
+        xaxis: { 
+          tickangle: -30, 
+          tickfont: { size: 10, family: 'Pretendard' },
+          fixedrange: true // X축 줌 차단
+        },
+        yaxis: { 
+          tickformat: ',.0f', 
+          gridcolor: '#f1f5f9',
+          fixedrange: true // Y축 줌 차단
+        },
+        hovermode: 'x unified',
+        paper_bgcolor: 'transparent',
+        plot_bgcolor: 'transparent'
+      };
+      Plotly.newPlot('chartMonthlyBar', barTraces, barLayout, { 
+        responsive: true, 
+        displayModeBar: false, 
+        scrollZoom: false 
+      });
+
+      // 2. Scatter: fixedrange로 줌인 차단
+      const colorMap = { "핵심": "#0284c7", "전략": "#f59e0b", "개별": "#10b981" };
+      const scatterTrace = {
+        x: agencies.map(a => a.visits),
+        y: agencies.map(a => a[currentMetric][3]),
+        text: agencies.map(a => a.name),
+        mode: 'markers+text',
+        textposition: 'top center',
+        textfont: { size: 10, color: '#334155', family: 'Pretendard' },
+        marker: {
+          size: 11,
+          color: agencies.map(a => colorMap[a.class] || "#64748b"),
+          line: { width: 1.5, color: '#ffffff' }
+        },
+        hovertemplate: '<b>%{text}</b><br>활동: %{x}회<br>당월: %{y:,.0f}원<extra></extra>'
+      };
+
+      const scatterLayout = {
+        dragmode: false, // 드래그 줌 차단
+        margin: { l: 55, r: 15, t: 20, b: 50 },
+        xaxis: { 
+          title: { text: '방문(활동) 횟수 (회)', font: { size: 11 } },
+          dtick: 1, 
+          gridcolor: '#f1f5f9',
+          zeroline: true,
+          zerolinecolor: '#e2e8f0',
+          fixedrange: true // X축 고정
+        },
+        yaxis: { 
+          title: { text: '9월 실적 (원)', font: { size: 11 } },
+          tickformat: ',.0f', 
+          gridcolor: '#f1f5f9',
+          fixedrange: true // Y축 고정
+        },
+        paper_bgcolor: 'transparent',
+        plot_bgcolor: 'transparent'
+      };
+      Plotly.newPlot('chartScatter', [scatterTrace], scatterLayout, { 
+        responsive: true, 
+        displayModeBar: false, 
+        scrollZoom: false 
+      });
+
+      // 3. Donut
+      const classSums = { "핵심": 0, "전략": 0, "개별": 0 };
+      agencies.forEach(a => {
+        if (classSums[a.class] !== undefined) {
+          classSums[a.class] += a[currentMetric][3];
+        }
+      });
+
+      const donutTrace = {
+        values: [classSums["핵심"], classSums["전략"], classSums["개별"]],
+        labels: ['핵심', '전략', '개별'],
+        type: 'pie',
+        hole: 0.58,
+        marker: { colors: ['#0284c7', '#f59e0b', '#10b981'] },
+        textinfo: 'percent+label',
+        textfont: { size: 11, family: 'Pretendard' },
+        showlegend: false
+      };
+
+      Plotly.newPlot('chartClassification', [donutTrace], {
+        margin: { l: 15, r: 15, t: 10, b: 10 },
+        paper_bgcolor: 'transparent'
+      }, { responsive: true, displayModeBar: false, scrollZoom: false });
+    }
+
+    function renderTable(agencies) {
+      const tbody = document.getElementById('agencyTableBody');
+      const tfoot = document.getElementById('agencyTableFoot');
+      tbody.innerHTML = '';
+
+      const sorted = [...agencies].sort((a, b) => b[currentMetric][3] - a[currentMetric][3]);
+
+      let sum6 = 0, sum7 = 0, sum8 = 0, sum9 = 0, sumVisits = 0;
+
+      sorted.forEach(a => {
+        const m = a[currentMetric];
+        sum6 += m[0]; sum7 += m[1]; sum8 += m[2]; sum9 += m[3];
+        sumVisits += a.visits;
+
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50 transition border-b border-slate-100";
+        
+        let statusBadge = "";
+        if (a.visits >= 3) {
+          statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700">집중관리</span>`;
+        } else if (a.visits > 0) {
+          statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-100 text-sky-700">활동완료</span>`;
+        } else {
+          statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-500">미활동</span>`;
+        }
+
+        const classColors = {
+          "핵심": "bg-sky-100 text-sky-800",
+          "전략": "bg-amber-100 text-amber-800",
+          "개별": "bg-emerald-100 text-emerald-800"
+        };
+
+        tr.innerHTML = `
+          <td class="py-2.5 px-3.5 font-bold text-slate-900">${a.name}</td>
+          <td class="py-2.5 px-2 text-center text-slate-500 font-mono font-medium">${a.type || '-'}</td>
+          <td class="py-2.5 px-2 text-center">
+            <span class="px-1.5 py-0.5 rounded text-[11px] font-bold ${classColors[a.class] || 'bg-slate-100 text-slate-700'}">${a.class}</span>
+          </td>
+          <td class="py-2.5 px-2.5 text-center text-slate-500 font-mono text-[11px]">${a.code || '-'}</td>
+          <td class="py-2.5 px-3 text-center text-slate-600 font-medium">${a.lastDate || '-'}</td>
+          <td class="py-2.5 px-2.5 text-center font-black ${a.visits > 0 ? 'text-sky-700' : 'text-slate-400'}">${a.visits}회</td>
+          <td class="py-2.5 px-3 text-right text-slate-600 font-medium">${m[0].toLocaleString()}원</td>
+          <td class="py-2.5 px-3 text-right text-slate-600 font-medium">${m[1].toLocaleString()}원</td>
+          <td class="py-2.5 px-3 text-right text-slate-600 font-medium">${m[2].toLocaleString()}원</td>
+          <td class="py-2.5 px-3.5 text-right font-extrabold text-sky-900 bg-sky-50/60">${m[3].toLocaleString()}원</td>
+          <td class="py-2.5 px-3 text-center">${statusBadge}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      tfoot.innerHTML = `
+        <tr class="text-slate-900 bg-slate-100/70">
+          <td class="py-3 px-3.5 font-extrabold">합계 (${agencies.length}개처)</td>
+          <td colspan="4" class="text-center text-slate-500 text-xs font-semibold">총 활동 집계</td>
+          <td class="py-3 px-2.5 text-center text-sky-700 font-black text-sm">${sumVisits}회</td>
+          <td class="py-3 px-3 text-right font-bold">${sum6.toLocaleString()}원</td>
+          <td class="py-3 px-3 text-right font-bold">${sum7.toLocaleString()}원</td>
+          <td class="py-3 px-3 text-right font-bold">${sum8.toLocaleString()}원</td>
+          <td class="py-3 px-3.5 text-right text-sky-900 text-sm font-black bg-sky-100/60">${sum9.toLocaleString()}원</td>
+          <td class="py-3 px-3 text-center">-</td>
+        </tr>
+      `;
+
+      document.getElementById('tableRowCount').textContent = `${agencies.length}개처`;
+    }
+
+    function filterTable() {
+      const q = document.getElementById('agencySearchInput').value.toLowerCase().trim();
+      const rows = document.querySelectorAll('#agencyTableBody tr');
+      rows.forEach(r => {
+        const name = r.children[0].textContent.toLowerCase();
+        r.style.display = name.includes(q) ? '' : 'none';
+      });
+    }
+
+    function exportToCsv() {
+      const data = rawDataset[currentLeader];
+      if (!data) return;
+
+      let csv = "대리점명,구분,분류,기관코드,최종활동일,방문횟수,6월실적,7월실적,8월실적,9월실적\n";
+      data.agencies.forEach(a => {
+        const m = a[currentMetric];
+        csv += `"${a.name}","${a.type}","${a.class}","${a.code}","${a.lastDate}",${a.visits},${m[0]},${m[1]},${m[2]},${m[3]}\n`;
+      });
+
+      const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.setAttribute("download", `${currentLeader}팀장_활동업적_${currentMetric}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initLeaderOptions();
+      updateDashboard();
+    });
+  </script>
+</body>
+</html>
