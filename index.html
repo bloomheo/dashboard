@@ -47,7 +47,7 @@
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>실시간 9월 진도
             </span>
           </div>
-          <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">데이터 원천: 신울산_설계팀장_활동관련.xlsx (정리 시트) | 업데이트: 2026-09-17 19:14</p>
+          <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">데이터 원천: 신울산_설계팀장_활동관련.xlsx (정리 시트) | 업데이트: 2026-09-17 19:18</p>
         </div>
       </div>
 
@@ -165,16 +165,77 @@
         <div id="chartMonthlyBar" class="w-full h-[340px] sm:h-[400px] pt-2"></div>
       </div>
 
-      <!-- Chart 2: Scatter (줌 차단 fixedrange 적용) -->
-      <div class="lg:col-span-8 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm">
+      <!-- 4분면 진단 카드: 기존 산점도 차트를 대체하여 실무 행동 지침 제공 -->
+      <div class="lg:col-span-8 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
         <div class="flex items-center justify-between pb-3 border-b border-slate-100">
           <div>
-            <h2 class="text-sm sm:text-base font-bold text-slate-900">🎯 방문 활동(횟수) vs 당월 실적 매트릭스</h2>
-            <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">대리점 방문 집중도 대비 실적 효율성 분석</p>
+            <h2 class="text-sm sm:text-base font-bold text-slate-900 flex items-center gap-2">
+              <span>🧭 활동 vs 실적 4분면 영업 진단</span>
+              <span class="text-[10px] sm:text-[11px] px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 font-bold border border-indigo-200">전략 가이드</span>
+            </h2>
+            <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">방문 집중도와 당월 실적을 교차 분석하여 즉시 행동 지침 제시</p>
           </div>
-          <span class="text-[10px] sm:text-xs px-2 py-1 bg-amber-50 text-amber-800 rounded-lg font-bold border border-amber-200">활동 효율</span>
+          <span class="text-[10px] sm:text-xs text-slate-400">기준: 실적 50만 / 방문 3회</span>
         </div>
-        <div id="chartScatter" class="w-full h-[300px] sm:h-[360px] pt-2"></div>
+
+        <!-- 4분면 2x2 그리드 영역 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
+          <!-- Q1: 고효율 대박처 -->
+          <div class="bg-emerald-50/60 border border-emerald-200/80 rounded-xl p-3 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-emerald-900 flex items-center gap-1.5">
+                  <span>💎</span> 고효율 대박처
+                </span>
+                <span id="badgeQHighEff" class="px-1.5 py-0.2 rounded text-[10px] font-extrabold bg-emerald-200 text-emerald-800">0곳</span>
+              </div>
+              <p class="text-[10px] text-emerald-700 mt-0.5 font-medium">적은 방문 대비 높은 실적! (집중 터치 권장)</p>
+            </div>
+            <div id="listQHighEff" class="mt-2 space-y-1.5 max-h-[105px] overflow-y-auto custom-scrollbar pr-1"></div>
+          </div>
+
+          <!-- Q2: 지점 핵심 기둥처 -->
+          <div class="bg-sky-50/60 border border-sky-200/80 rounded-xl p-3 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-sky-900 flex items-center gap-1.5">
+                  <span>🌟</span> 지점 핵심 기둥처
+                </span>
+                <span id="badgeQCore" class="px-1.5 py-0.2 rounded text-[10px] font-extrabold bg-sky-200 text-sky-800">0곳</span>
+              </div>
+              <p class="text-[10px] text-sky-700 mt-0.5 font-medium">활발한 활동 + 높은 실적! (우호 관계 유지)</p>
+            </div>
+            <div id="listQCore" class="mt-2 space-y-1.5 max-h-[105px] overflow-y-auto custom-scrollbar pr-1"></div>
+          </div>
+
+          <!-- Q3: 활동 효율 점검처 -->
+          <div class="bg-amber-50/60 border border-amber-200/80 rounded-xl p-3 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-amber-900 flex items-center gap-1.5">
+                  <span>⚠️</span> 활동 효율 점검처
+                </span>
+                <span id="badgeQReview" class="px-1.5 py-0.2 rounded text-[10px] font-extrabold bg-amber-200 text-amber-800">0곳</span>
+              </div>
+              <p class="text-[10px] text-amber-700 mt-0.5 font-medium">방문은 잦으나 실적 저조 (접근 방식/니즈 재점검)</p>
+            </div>
+            <div id="listQReview" class="mt-2 space-y-1.5 max-h-[105px] overflow-y-auto custom-scrollbar pr-1"></div>
+          </div>
+
+          <!-- Q4: 잠자는 처 / 미개척처 -->
+          <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                  <span>💤</span> 잠자는 처 / 미개척
+                </span>
+                <span id="badgeQSleep" class="px-1.5 py-0.2 rounded text-[10px] font-extrabold bg-slate-200 text-slate-700">0곳</span>
+              </div>
+              <p class="text-[10px] text-slate-500 mt-0.5 font-medium">방문 및 당월 실적 미흡 (신규 불씨 점화 필요)</p>
+            </div>
+            <div id="listQSleep" class="mt-2 space-y-1.5 max-h-[105px] overflow-y-auto custom-scrollbar pr-1"></div>
+          </div>
+        </div>
       </div>
 
       <!-- Widget: 방문 필요 Br. (이탈/공백 위험 대리점 알림) -->
@@ -2155,51 +2216,74 @@
         scrollZoom: false 
       });
 
-      // 2. Scatter: fixedrange로 줌인 차단
-      const colorMap = { "핵심": "#0284c7", "전략": "#f59e0b", "개별": "#10b981" };
-      const scatterTrace = {
-        x: agencies.map(a => a.visits),
-        y: agencies.map(a => a[currentMetric][3]),
-        text: agencies.map(a => a.name),
-        mode: 'markers+text',
-        textposition: 'top center',
-        textfont: { size: 10, color: '#334155', family: 'Pretendard' },
-        marker: {
-          size: 11,
-          color: agencies.map(a => colorMap[a.class] || "#64748b"),
-          line: { width: 1.5, color: '#ffffff' }
-        },
-        hovertemplate: '<b>%{text}</b><br>활동: %{x}회<br>당월: %{y:,.0f}원<extra></extra>'
-      };
-
-      const scatterLayout = {
-        dragmode: false, // 드래그 줌 차단
-        margin: { l: 55, r: 15, t: 20, b: 50 },
-        xaxis: { 
-          title: { text: '방문(활동) 횟수 (회)', font: { size: 11 } },
-          dtick: 1, 
-          gridcolor: '#f1f5f9',
-          zeroline: true,
-          zerolinecolor: '#e2e8f0',
-          fixedrange: true // X축 고정
-        },
-        yaxis: { 
-          title: { text: '9월 실적 (원)', font: { size: 11 } },
-          tickformat: ',.0f', 
-          gridcolor: '#f1f5f9',
-          fixedrange: true // Y축 고정
-        },
-        paper_bgcolor: 'transparent',
-        plot_bgcolor: 'transparent'
-      };
-      Plotly.newPlot('chartScatter', [scatterTrace], scatterLayout, { 
-        responsive: true, 
-        displayModeBar: false, 
-        scrollZoom: false 
-      });
+      // 2. 4분면 진단 카드 렌더링 (기존 산점도 대체)
+      renderQuadrantMatrix(agencies);
 
       // 3. '방문 필요 Br.' 위젯 렌더링
       renderRiskAgencies(agencies);
+    }
+
+    function renderQuadrantMatrix(agencies) {
+      // 기준값: 당월 실적 50만원, 방문 3회 이상
+      const REV_THRESHOLD = 500000;
+      const VISIT_THRESHOLD = 3;
+
+      const qHighEff = [];  // 실적 높음 + 방문 적음 (< 3회)
+      const qCore = [];     // 실적 높음 + 방문 많음 (>= 3회)
+      const qReview = [];   // 실적 낮음 + 방문 많음 (>= 3회)
+      const qSleep = [];    // 실적 낮음 + 방문 적음 (< 3회)
+
+      agencies.forEach(a => {
+        const rev = a[currentMetric][3];
+        const visits = a.visits;
+
+        if (rev >= REV_THRESHOLD && visits < VISIT_THRESHOLD) {
+          qHighEff.push(a);
+        } else if (rev >= REV_THRESHOLD && visits >= VISIT_THRESHOLD) {
+          qCore.push(a);
+        } else if (rev < REV_THRESHOLD && visits >= VISIT_THRESHOLD) {
+          qReview.push(a);
+        } else {
+          qSleep.push(a);
+        }
+      });
+
+      const renderQuadrantList = (containerId, badgeId, list, badgeColor, isGoodRev) => {
+        const container = document.getElementById(containerId);
+        const badge = document.getElementById(badgeId);
+        if (!container || !badge) return;
+        badge.textContent = `${list.length}곳`;
+        container.innerHTML = '';
+
+        if (list.length === 0) {
+          container.innerHTML = `<div class="py-4 text-center text-slate-400 text-[11px]">해당 처 없음</div>`;
+          return;
+        }
+
+        // 실적순 내림차순 정렬
+        list.sort((a, b) => b[currentMetric][3] - a[currentMetric][3]);
+
+        list.forEach(a => {
+          const rev = a[currentMetric][3];
+          const item = document.createElement('div');
+          item.className = "flex items-center justify-between text-[11px] bg-white/90 px-2 py-1.5 rounded-lg border border-slate-100 shadow-2xs";
+          item.innerHTML = `
+            <div class="flex items-center gap-1.5 min-w-0">
+              <span class="font-bold text-slate-800 truncate">${a.name}</span>
+              <span class="text-[9px] px-1 py-0.2 rounded bg-slate-100 text-slate-500 shrink-0">${a.visits}회</span>
+            </div>
+            <span class="font-bold shrink-0 ${isGoodRev ? 'text-emerald-700' : (rev === 0 ? 'text-slate-400' : 'text-slate-700')}">
+              ${rev > 0 ? Math.round(rev).toLocaleString() + '원' : '0원'}
+            </span>
+          `;
+          container.appendChild(item);
+        });
+      };
+
+      renderQuadrantList('listQHighEff', 'badgeQHighEff', qHighEff, 'emerald', true);
+      renderQuadrantList('listQCore', 'badgeQCore', qCore, 'sky', true);
+      renderQuadrantList('listQReview', 'badgeQReview', qReview, 'amber', false);
+      renderQuadrantList('listQSleep', 'badgeQSleep', qSleep, 'slate', false);
     }
 
     function renderRiskAgencies(agencies) {
