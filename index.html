@@ -47,7 +47,7 @@
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>실시간 9월 진도
             </span>
           </div>
-          <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">데이터 원천: 신울산_설계팀장_활동관련.xlsx (정리 시트) | 업데이트: 2026-09-17 19:25</p>
+          <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">데이터 원천: 신울산_설계팀장_활동관련.xlsx (정리 시트) | 업데이트: 2026-09-17 19:27</p>
         </div>
       </div>
 
@@ -136,7 +136,7 @@
 
     <!-- Charts Section -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
-      <!-- Chart 1: 추이 비교 (줌 차단 fixedrange 적용) -->
+      <!-- Chart 1: 추이 비교 -->
       <div class="lg:col-span-12 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-3 border-b border-slate-100 gap-2">
           <div>
@@ -146,7 +146,6 @@
             </h2>
             <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">전월 대비 증감 및 월별 실적 변동 현황</p>
           </div>
-          <!-- 가독성 향상 옵션 컨트롤 -->
           <div class="flex flex-wrap items-center gap-2">
             <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-[11px]">
               <button id="btnViewFocus" onclick="setChartTimeView('focus')" class="px-2.5 py-1 font-bold rounded-lg shadow-sm bg-white text-sky-700 transition">
@@ -165,7 +164,7 @@
         <div id="chartMonthlyBar" class="w-full h-[340px] sm:h-[400px] pt-2"></div>
       </div>
 
-      <!-- 4분면 진단 카드: 기존 산점도 차트를 대체하여 실무 행동 지침 제공 -->
+      <!-- 4분면 진단 카드 -->
       <div class="lg:col-span-8 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
         <div class="flex items-center justify-between pb-3 border-b border-slate-100">
           <div>
@@ -180,7 +179,7 @@
 
         <!-- 4분면 2x2 그리드 영역 -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
-          <!-- 카드 1: 고능률 Br. (당월 실적 상위 3곳) -->
+          <!-- 카드 1: 고능률 Br. -->
           <div class="bg-emerald-50/60 border border-emerald-200/80 rounded-xl p-3 flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between">
@@ -194,7 +193,7 @@
             <div id="listQHighEff" class="mt-2 space-y-1.5 max-h-[110px] overflow-y-auto custom-scrollbar pr-1"></div>
           </div>
 
-          <!-- 카드 2: 가동인원 상위 Br. (가동인원 상위 3곳) -->
+          <!-- 카드 2: 가동인원 상위 Br. -->
           <div class="bg-sky-50/60 border border-sky-200/80 rounded-xl p-3 flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between">
@@ -208,7 +207,7 @@
             <div id="listQActiveUsers" class="mt-2 space-y-1.5 max-h-[110px] overflow-y-auto custom-scrollbar pr-1"></div>
           </div>
 
-          <!-- 카드 3: 전월 대비 급상승 Br. (MoM 증가액 상위 3곳) -->
+          <!-- 카드 3: 전월 대비 급상승 Br. -->
           <div class="bg-indigo-50/60 border border-indigo-200/80 rounded-xl p-3 flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between">
@@ -222,7 +221,7 @@
             <div id="listQGrowth" class="mt-2 space-y-1.5 max-h-[110px] overflow-y-auto custom-scrollbar pr-1"></div>
           </div>
 
-          <!-- 카드 4: 방문 필요 Br. (방문 0~1회 전체) -->
+          <!-- 카드 4: 방문 필요 Br. -->
           <div class="bg-amber-50/60 border border-amber-200/80 rounded-xl p-3 flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between">
@@ -238,7 +237,7 @@
         </div>
       </div>
 
-      <!-- Widget: 방문 필요 Br. (이탈/공백 위험 대리점 알림) -->
+      <!-- Widget: 방문 필요 Br. (이탈/공백 위험) -->
       <div class="lg:col-span-4 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -251,9 +250,7 @@
             </div>
             <span id="riskCountBadge" class="text-[10px] sm:text-xs px-2 py-0.5 bg-rose-50 text-rose-700 rounded-full font-bold border border-rose-200">0개처</span>
           </div>
-          <!-- 리스트 영역 (스크롤 가능) -->
           <div id="riskAgencyList" class="divide-y divide-slate-100 mt-2 max-h-[290px] sm:max-h-[310px] overflow-y-auto custom-scrollbar">
-            <!-- 동적으로 채워짐 -->
           </div>
         </div>
         <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
@@ -263,7 +260,7 @@
       </div>
     </div>
 
-    <!-- Detailed Agency Table (모바일 가로 스크롤 & 글자 깨짐 방지) -->
+    <!-- Detailed Agency Table -->
     <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
       <div class="p-3.5 sm:p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/60">
         <div>
@@ -291,7 +288,6 @@
         </div>
       </div>
 
-      <!-- min-w-[840px] 및 whitespace-nowrap 적용으로 글자 쪼개짐 원천 차단 -->
       <div class="overflow-x-auto custom-scrollbar w-full">
         <table class="w-full min-w-[840px] text-left border-collapse text-xs">
           <thead>
@@ -2113,8 +2109,8 @@
 };
     let currentLeader = Object.keys(rawDataset)[0] || "";
     let currentMetric = "bojang";
-    let chartTimeView = "focus"; // 'focus' (8월 vs 9월) or 'all' (6,7,8,9월)
-    let activeOnly = false; // 실적 발생처만 필터링
+    let chartTimeView = "focus";
+    let activeOnly = false;
 
     function initLeaderOptions() {
       const select = document.getElementById('leaderSelect');
@@ -2210,13 +2206,11 @@
         momEl.innerHTML = `전월 대비 <span class="font-bold text-rose-600 flex items-center">▼ ${formatWon(Math.abs(momDiff))} (${momPct}%)</span>`;
       }
 
-      // 전월 Br. 가동률
       const prevActiveRate = agencies.length > 0 ? Math.round((prevActiveCount / agencies.length) * 100) : 0;
       document.getElementById('kpiPrevActiveAgenciesMain').textContent = `${prevActiveCount} / ${agencies.length}Br.`;
       document.getElementById('kpiPrevActiveRate').textContent = `(${prevActiveRate}%)`;
       document.getElementById('kpiPrevActiveSub').textContent = `8월 실적 발생 Br. (담당 ${agencies.length}Br. 중)`;
 
-      // 당월 Br. 가동률
       const activeRate = agencies.length > 0 ? Math.round((currActiveCount / agencies.length) * 100) : 0;
       document.getElementById('kpiActiveAgenciesMain').textContent = `${currActiveCount} / ${agencies.length}Br.`;
       document.getElementById('kpiActiveRate').textContent = `(${activeRate}%)`;
@@ -2235,7 +2229,6 @@
         filtered = filtered.filter(a => a[currentMetric][3] > 0 || a[currentMetric][2] > 0);
       }
 
-      // 당월 실적 내림차순 정렬
       const sorted = filtered.sort((a, b) => b[currentMetric][3] - a[currentMetric][3]);
       
       const agencyNames = sorted.map(a => a.name);
@@ -2244,7 +2237,6 @@
       const m8Vals = sorted.map(a => a[currentMetric][2]);
       const m9Vals = sorted.map(a => a[currentMetric][3]);
 
-      // 가독성 개선: 전월 vs 당월 비교(기본) vs 4개월 전체 보기
       let barTraces = [];
       if (chartTimeView === 'focus') {
         barTraces = [
@@ -2300,15 +2292,12 @@
         scrollZoom: false 
       });
 
-      // 2. 4분면 진단 카드 렌더링 (기존 산점도 대체)
       renderQuadrantMatrix(agencies);
-
-      // 3. '방문 필요 Br.' 위젯 렌더링
       renderRiskAgencies(agencies);
     }
 
     function renderQuadrantMatrix(agencies) {
-      // 1. 고능률 Br. (당월 실적 상위 3곳)
+      // 1. 고능률 Br. TOP 3
       const topRevList = [...agencies]
         .sort((a, b) => b[currentMetric][3] - a[currentMetric][3])
         .slice(0, 3);
@@ -2329,7 +2318,7 @@
         listQHighEff.appendChild(item);
       });
 
-      // 2. 가동인원 상위 Br. (가동인원 상위 3곳)
+      // 2. 가동인원 상위 Br. TOP 3
       const topActiveUsersList = [...agencies]
         .sort((a, b) => (b.activeUsers || 0) - (a.activeUsers || 0) || (b[currentMetric][3] - a[currentMetric][3]))
         .slice(0, 3);
@@ -2353,7 +2342,7 @@
         listQActiveUsers.appendChild(item);
       });
 
-      // 3. 전월 대비 급상승 Br. (8월 대비 9월 실적 증가액 TOP 3)
+      // 3. 전월 대비 급상승 Br. TOP 3
       const topGrowthList = agencies
         .map(a => ({
           ...a,
@@ -2382,7 +2371,7 @@
         });
       }
 
-      // 4. 방문 필요 대리점 (방문횟수 0~1회 전체 목록)
+      // 4. 방문 필요 Br. (방문횟수 0~1회 전체 목록)
       const needVisitList = agencies
         .filter(a => (a.visits === 0 || a.visits === 1))
         .sort((a, b) => a.visits - b.visits || b[currentMetric][3] - a[currentMetric][3]);
@@ -2412,45 +2401,6 @@
         });
       }
     }
-      });
-
-      const renderQuadrantList = (containerId, badgeId, list, badgeColor, isGoodRev) => {
-        const container = document.getElementById(containerId);
-        const badge = document.getElementById(badgeId);
-        if (!container || !badge) return;
-        badge.textContent = `${list.length}곳`;
-        container.innerHTML = '';
-
-        if (list.length === 0) {
-          container.innerHTML = `<div class="py-4 text-center text-slate-400 text-[11px]">해당 처 없음</div>`;
-          return;
-        }
-
-        // 실적순 내림차순 정렬
-        list.sort((a, b) => b[currentMetric][3] - a[currentMetric][3]);
-
-        list.forEach(a => {
-          const rev = a[currentMetric][3];
-          const item = document.createElement('div');
-          item.className = "flex items-center justify-between text-[11px] bg-white/90 px-2 py-1.5 rounded-lg border border-slate-100 shadow-2xs";
-          item.innerHTML = `
-            <div class="flex items-center gap-1.5 min-w-0">
-              <span class="font-bold text-slate-800 truncate">${a.name}</span>
-              <span class="text-[9px] px-1 py-0.2 rounded bg-slate-100 text-slate-500 shrink-0">${a.visits}회</span>
-            </div>
-            <span class="font-bold shrink-0 ${isGoodRev ? 'text-emerald-700' : (rev === 0 ? 'text-slate-400' : 'text-slate-700')}">
-              ${rev > 0 ? Math.round(rev).toLocaleString() + '원' : '0원'}
-            </span>
-          `;
-          container.appendChild(item);
-        });
-      };
-
-      renderQuadrantList('listQHighEff', 'badgeQHighEff', qHighEff, 'emerald', true);
-      renderQuadrantList('listQCore', 'badgeQCore', qCore, 'sky', true);
-      renderQuadrantList('listQReview', 'badgeQReview', qReview, 'amber', false);
-      renderQuadrantList('listQSleep', 'badgeQSleep', qSleep, 'slate', false);
-    }
 
     function renderRiskAgencies(agencies) {
       const container = document.getElementById('riskAgencyList');
@@ -2458,9 +2408,6 @@
       if (!container) return;
       container.innerHTML = '';
 
-      // 전월(8월) 실적이 있었으나 당월(9월) 실적이 0원이거나 대폭 하락한 대리점 필터링
-      // 우선순위: (1) 8월 실적 > 0 이면서 9월 = 0 (완전 공백 처)
-      //          (2) 전월 대비 감소폭이 큰 순서
       const riskList = agencies
         .map(a => {
           const m8 = a[currentMetric][2];
@@ -2474,12 +2421,11 @@
             isZero: m8 > 0 && m9 === 0
           };
         })
-        .filter(a => (a.m8 > 0 && a.diff < 0)) // 8월 실적이 있었고 9월에 감소한 처
+        .filter(a => (a.m8 > 0 && a.diff < 0))
         .sort((a, b) => {
-          // 9월 0원인 곳을 최우선으로, 그 다음 감소액이 큰 순
           if (a.isZero && !b.isZero) return -1;
           if (!a.isZero && b.isZero) return 1;
-          return a.diff - b.diff; // 마이너스가 큰 순 (더 많이 떨어진 순)
+          return a.diff - b.diff;
         });
 
       if (badge) badge.textContent = `${riskList.length}개처`;
@@ -2493,7 +2439,6 @@
         return;
       }
 
-      // 상위 최대 5개 노출
       riskList.slice(0, 5).forEach(a => {
         const item = document.createElement('div');
         item.className = "py-2.5 flex items-center justify-between gap-2 hover:bg-slate-50 px-1 rounded-lg transition";
