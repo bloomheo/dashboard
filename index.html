@@ -81,7 +81,21 @@
 
     <!-- KPI Summary Grid -->
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-      <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+      <div class="bg-white p-3.5 sm:p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+        <div class="flex items-center justify-between text-slate-500 mb-1.5">
+          <span class="text-xs font-semibold">9월 당월 실적</span>
+          <span class="p-1.5 bg-sky-50 text-sky-600 rounded-lg">
+            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </span>
+        </div>
+        <div id="kpiCurrentMonth" class="text-lg sm:text-2xl font-black text-slate-900 tracking-tight">0원</div>
+        <div id="kpiMoM" class="text-[10px] sm:text-xs mt-1.5 text-slate-500 flex items-center gap-1 font-medium whitespace-nowrap tracking-tight overflow-hidden">
+          <span>전월대비</span>
+          <span class="font-bold text-rose-500">-</span>
+        </div>
+      </div>
+
+      <div class="bg-white p-3.5 sm:p-5 rounded-2xl border border-slate-200 shadow-sm">
         <div class="flex items-center justify-between text-slate-500 mb-1.5">
           <span class="text-xs font-semibold">9월 당월 실적</span>
           <span class="p-1.5 bg-sky-50 text-sky-600 rounded-lg">
@@ -2168,9 +2182,9 @@
       const momPct = totalM8 > 0 ? ((momDiff / totalM8) * 100).toFixed(1) : (totalM9 > 0 ? 100 : 0);
       const momEl = document.getElementById('kpiMoM');
       if (momDiff >= 0) {
-        momEl.innerHTML = `전월 대비 <span class="font-bold text-emerald-600 flex items-center">▲ ${formatWon(momDiff)} (+${momPct}%)</span>`;
+        momEl.innerHTML = `<span class="shrink-0 text-slate-500">전월대비</span> <span class="font-bold text-emerald-600 shrink-0">▲ ${formatWon(momDiff)} (+${momPct}%)</span>`;
       } else {
-        momEl.innerHTML = `전월 대비 <span class="font-bold text-rose-600 flex items-center">▼ ${formatWon(Math.abs(momDiff))} (${momPct}%)</span>`;
+        momEl.innerHTML = `<span class="shrink-0 text-slate-500">전월대비</span> <span class="font-bold text-rose-600 shrink-0">▼ ${formatWon(Math.abs(momDiff))} (${momPct}%)</span>`;
       }
 
       const prevActiveRate = agencies.length > 0 ? Math.round((prevActiveCount / agencies.length) * 100) : 0;
