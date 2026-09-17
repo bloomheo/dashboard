@@ -47,7 +47,7 @@
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>실시간 9월 진도
             </span>
           </div>
-          <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">데이터 원천: 신울산_설계팀장_활동관련.xlsx (정리 시트) | 업데이트: 2026-09-17 19:04</p>
+          <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">데이터 원천: 신울산_설계팀장_활동관련.xlsx (정리 시트) | 업데이트: 2026-09-17 19:08</p>
         </div>
       </div>
 
@@ -141,19 +141,28 @@
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-3 border-b border-slate-100 gap-2">
           <div>
             <h2 class="text-sm sm:text-base font-bold text-slate-900 flex items-center gap-2">
-              <span>📊 대리점별 최근 4개월 실적 추이 비교</span>
+              <span>📊 대리점별 실적 추이 비교</span>
               <span id="chartMetricTag" class="text-[10px] sm:text-[11px] px-2 py-0.5 rounded-md bg-sky-50 text-sky-700 font-bold border border-sky-200">보장 기준</span>
             </h2>
-            <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">6월 → 7월 → 8월 → 9월 실적 변동 현황</p>
+            <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">전월 대비 증감 및 월별 실적 변동 현황</p>
           </div>
-          <div class="flex items-center space-x-2 text-[11px] sm:text-xs font-medium">
-            <span class="inline-flex items-center gap-1 text-slate-500"><span class="w-2 h-2 rounded-sm bg-slate-300"></span>6월</span>
-            <span class="inline-flex items-center gap-1 text-slate-500"><span class="w-2 h-2 rounded-sm bg-sky-200"></span>7월</span>
-            <span class="inline-flex items-center gap-1 text-slate-500"><span class="w-2 h-2 rounded-sm bg-sky-400"></span>8월</span>
-            <span class="inline-flex items-center gap-1 font-bold text-sky-900"><span class="w-2 h-2 rounded-sm bg-sky-700"></span>9월</span>
+          <!-- 가독성 향상 옵션 컨트롤 -->
+          <div class="flex flex-wrap items-center gap-2">
+            <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-[11px]">
+              <button id="btnViewFocus" onclick="setChartTimeView('focus')" class="px-2.5 py-1 font-bold rounded-lg shadow-sm bg-white text-sky-700 transition">
+                전월 vs 당월 비교 (추천)
+              </button>
+              <button id="btnViewAll" onclick="setChartTimeView('all')" class="px-2.5 py-1 font-medium rounded-lg text-slate-600 hover:text-slate-900 transition">
+                4개월 전체
+              </button>
+            </div>
+            <label class="inline-flex items-center cursor-pointer bg-slate-50 px-2.5 py-1 rounded-xl border border-slate-200 text-[11px] font-semibold text-slate-600 select-none">
+              <input type="checkbox" id="chkActiveOnly" onchange="toggleActiveOnly()" class="rounded text-sky-600 focus:ring-sky-500 mr-1.5 cursor-pointer">
+              <span>실적 발생처만 보기</span>
+            </label>
           </div>
         </div>
-        <div id="chartMonthlyBar" class="w-full h-[320px] sm:h-[380px] pt-2"></div>
+        <div id="chartMonthlyBar" class="w-full h-[340px] sm:h-[400px] pt-2"></div>
       </div>
 
       <!-- Chart 2: Scatter (줌 차단 fixedrange 적용) -->
@@ -1944,6 +1953,8 @@
 };
     let currentLeader = Object.keys(rawDataset)[0] || "";
     let currentMetric = "bojang";
+    let chartTimeView = "focus"; // 'focus' (8월 vs 9월) or 'all' (6,7,8,9월)
+    let activeOnly = false; // 실적 발생처만 필터링
 
     function initLeaderOptions() {
       const select = document.getElementById('leaderSelect');
@@ -1978,6 +1989,27 @@
         tag.textContent = "건강보험 기준";
       }
       updateDashboard();
+    }
+
+    function setChartTimeView(view) {
+      chartTimeView = view;
+      const btnFocus = document.getElementById('btnViewFocus');
+      const btnAll = document.getElementById('btnViewAll');
+      if (view === 'focus') {
+        btnFocus.className = "px-2.5 py-1 font-bold rounded-lg shadow-sm bg-white text-sky-700 transition";
+        btnAll.className = "px-2.5 py-1 font-medium rounded-lg text-slate-600 hover:text-slate-900 transition";
+      } else {
+        btnAll.className = "px-2.5 py-1 font-bold rounded-lg shadow-sm bg-white text-sky-700 transition";
+        btnFocus.className = "px-2.5 py-1 font-medium rounded-lg text-slate-600 hover:text-slate-900 transition";
+      }
+      const data = rawDataset[currentLeader];
+      if (data) renderCharts(data.agencies);
+    }
+
+    function toggleActiveOnly() {
+      activeOnly = document.getElementById('chkActiveOnly').checked;
+      const data = rawDataset[currentLeader];
+      if (data) renderCharts(data.agencies);
     }
 
     function onLeaderChange(leader) {
@@ -2038,7 +2070,13 @@
     }
 
     function renderCharts(agencies) {
-      const sorted = [...agencies].sort((a, b) => b[currentMetric][3] - a[currentMetric][3]);
+      let filtered = [...agencies];
+      if (activeOnly) {
+        filtered = filtered.filter(a => a[currentMetric][3] > 0 || a[currentMetric][2] > 0);
+      }
+
+      // 당월 실적 내림차순 정렬
+      const sorted = filtered.sort((a, b) => b[currentMetric][3] - a[currentMetric][3]);
       
       const agencyNames = sorted.map(a => a.name);
       const m6Vals = sorted.map(a => a[currentMetric][0]);
@@ -2046,28 +2084,51 @@
       const m8Vals = sorted.map(a => a[currentMetric][2]);
       const m9Vals = sorted.map(a => a[currentMetric][3]);
 
-      // 1. Grouped Bar: fixedrange로 스마트폰 터치 시 강제 확대 원천 차단
-      const barTraces = [
-        { x: agencyNames, y: m6Vals, name: '6월', type: 'bar', marker: { color: '#cbd5e1' } },
-        { x: agencyNames, y: m7Vals, name: '7월', type: 'bar', marker: { color: '#bae6fd' } },
-        { x: agencyNames, y: m8Vals, name: '8월', type: 'bar', marker: { color: '#38bdf8' } },
-        { x: agencyNames, y: m9Vals, name: '9월(당월)', type: 'bar', marker: { color: '#0369a1' } }
-      ];
+      // 가독성 개선: 전월 vs 당월 비교(기본) vs 4개월 전체 보기
+      let barTraces = [];
+      if (chartTimeView === 'focus') {
+        barTraces = [
+          {
+            x: agencyNames,
+            y: m8Vals,
+            name: '8월 실적',
+            type: 'bar',
+            marker: { color: '#94a3b8' }
+          },
+          {
+            x: agencyNames,
+            y: m9Vals,
+            name: '9월(당월)',
+            type: 'bar',
+            marker: { color: '#0284c7' }
+          }
+        ];
+      } else {
+        barTraces = [
+          { x: agencyNames, y: m6Vals, name: '6월', type: 'bar', marker: { color: '#cbd5e1' } },
+          { x: agencyNames, y: m7Vals, name: '7월', type: 'bar', marker: { color: '#bae6fd' } },
+          { x: agencyNames, y: m8Vals, name: '8월', type: 'bar', marker: { color: '#38bdf8' } },
+          { x: agencyNames, y: m9Vals, name: '9월(당월)', type: 'bar', marker: { color: '#0369a1' } }
+        ];
+      }
 
       const barLayout = {
         barmode: 'group',
-        dragmode: false, // 줌인 드래그 비활성화
-        margin: { l: 55, r: 15, t: 15, b: 80 },
+        bargap: 0.25,
+        bargroupgap: 0.1,
+        dragmode: false,
+        margin: { l: 75, r: 20, t: 20, b: 90 },
         legend: { orientation: 'h', y: 1.15, x: 0 },
         xaxis: { 
-          tickangle: -30, 
-          tickfont: { size: 10, family: 'Pretendard' },
-          fixedrange: true // X축 줌 차단
+          tickangle: -35, 
+          tickfont: { size: 10, family: 'Pretendard', color: '#1e293b' },
+          fixedrange: true
         },
         yaxis: { 
-          tickformat: ',.0f', 
+          ticksuffix: '원',
+          tickformat: ',.0f',
           gridcolor: '#f1f5f9',
-          fixedrange: true // Y축 줌 차단
+          fixedrange: true
         },
         hovermode: 'x unified',
         paper_bgcolor: 'transparent',
