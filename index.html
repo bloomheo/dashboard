@@ -47,7 +47,7 @@
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>실시간 9월 진도
             </span>
           </div>
-          <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">데이터 원천: 신울산_설계팀장_활동관련.xlsx (정리 시트) | 업데이트: 2026-09-17 19:18</p>
+          <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">데이터 원천: 신울산_설계팀장_활동관련.xlsx (정리 시트) | 업데이트: 2026-09-17 19:24</p>
         </div>
       </div>
 
@@ -170,70 +170,70 @@
         <div class="flex items-center justify-between pb-3 border-b border-slate-100">
           <div>
             <h2 class="text-sm sm:text-base font-bold text-slate-900 flex items-center gap-2">
-              <span>🧭 활동 vs 실적 4분면 영업 진단</span>
-              <span class="text-[10px] sm:text-[11px] px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 font-bold border border-indigo-200">전략 가이드</span>
+              <span>🧭 활동 & 실적 전략 진단 보드</span>
+              <span class="text-[10px] sm:text-[11px] px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 font-bold border border-indigo-200">영업 인사이트</span>
             </h2>
-            <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">방문 집중도와 당월 실적을 교차 분석하여 즉시 행동 지침 제시</p>
+            <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">고능률처, 인원가동처, 급성장처 및 방문 취약 대리점 집중 분석</p>
           </div>
-          <span class="text-[10px] sm:text-xs text-slate-400">기준: 실적 50만 / 방문 3회</span>
+          <span class="text-[10px] sm:text-xs text-slate-400">당월 영업 진도 기준</span>
         </div>
 
         <!-- 4분면 2x2 그리드 영역 -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
-          <!-- Q1: 고효율 대박처 -->
+          <!-- 카드 1: 고능률 Br. (당월 실적 상위 3곳) -->
           <div class="bg-emerald-50/60 border border-emerald-200/80 rounded-xl p-3 flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between">
                 <span class="text-xs font-bold text-emerald-900 flex items-center gap-1.5">
-                  <span>💎</span> 고효율 대박처
+                  <span>💎</span> 고능률 Br.
                 </span>
-                <span id="badgeQHighEff" class="px-1.5 py-0.2 rounded text-[10px] font-extrabold bg-emerald-200 text-emerald-800">0곳</span>
+                <span class="px-1.5 py-0.2 rounded text-[10px] font-extrabold bg-emerald-200 text-emerald-800">TOP 3</span>
               </div>
-              <p class="text-[10px] text-emerald-700 mt-0.5 font-medium">적은 방문 대비 높은 실적! (집중 터치 권장)</p>
+              <p class="text-[10px] text-emerald-700 mt-0.5 font-medium">당월 최고 실적 달성 대리점</p>
             </div>
-            <div id="listQHighEff" class="mt-2 space-y-1.5 max-h-[105px] overflow-y-auto custom-scrollbar pr-1"></div>
+            <div id="listQHighEff" class="mt-2 space-y-1.5 max-h-[110px] overflow-y-auto custom-scrollbar pr-1"></div>
           </div>
 
-          <!-- Q2: 지점 핵심 기둥처 -->
+          <!-- 카드 2: 가동인원 상위 Br. (가동인원 상위 3곳) -->
           <div class="bg-sky-50/60 border border-sky-200/80 rounded-xl p-3 flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between">
                 <span class="text-xs font-bold text-sky-900 flex items-center gap-1.5">
-                  <span>🌟</span> 지점 핵심 기둥처
+                  <span>👥</span> 가동인원 상위 Br.
                 </span>
-                <span id="badgeQCore" class="px-1.5 py-0.2 rounded text-[10px] font-extrabold bg-sky-200 text-sky-800">0곳</span>
+                <span class="px-1.5 py-0.2 rounded text-[10px] font-extrabold bg-sky-200 text-sky-800">TOP 3</span>
               </div>
-              <p class="text-[10px] text-sky-700 mt-0.5 font-medium">활발한 활동 + 높은 실적! (우호 관계 유지)</p>
+              <p class="text-[10px] text-sky-700 mt-0.5 font-medium">당월 설계사 가동인원 최다 대리점</p>
             </div>
-            <div id="listQCore" class="mt-2 space-y-1.5 max-h-[105px] overflow-y-auto custom-scrollbar pr-1"></div>
+            <div id="listQActiveUsers" class="mt-2 space-y-1.5 max-h-[110px] overflow-y-auto custom-scrollbar pr-1"></div>
           </div>
 
-          <!-- Q3: 활동 효율 점검처 -->
+          <!-- 카드 3: 전월 대비 급상승 Br. (MoM 증가액 상위 3곳) -->
+          <div class="bg-indigo-50/60 border border-indigo-200/80 rounded-xl p-3 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-indigo-900 flex items-center gap-1.5">
+                  <span>🚀</span> 전월 대비 급상승 Br.
+                </span>
+                <span class="px-1.5 py-0.2 rounded text-[10px] font-extrabold bg-indigo-200 text-indigo-800">TOP 3</span>
+              </div>
+              <p class="text-[10px] text-indigo-700 mt-0.5 font-medium">전월(8월) 대비 실적 순증 대리점</p>
+            </div>
+            <div id="listQGrowth" class="mt-2 space-y-1.5 max-h-[110px] overflow-y-auto custom-scrollbar pr-1"></div>
+          </div>
+
+          <!-- 카드 4: 방문 필요 Br. (방문 0~1회 전체) -->
           <div class="bg-amber-50/60 border border-amber-200/80 rounded-xl p-3 flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between">
                 <span class="text-xs font-bold text-amber-900 flex items-center gap-1.5">
-                  <span>⚠️</span> 활동 효율 점검처
+                  <span>🏃</span> 방문 필요 Br.
                 </span>
-                <span id="badgeQReview" class="px-1.5 py-0.2 rounded text-[10px] font-extrabold bg-amber-200 text-amber-800">0곳</span>
+                <span id="badgeQNeedVisit" class="px-1.5 py-0.2 rounded text-[10px] font-extrabold bg-amber-200 text-amber-800">0곳</span>
               </div>
-              <p class="text-[10px] text-amber-700 mt-0.5 font-medium">방문은 잦으나 실적 저조 (접근 방식/니즈 재점검)</p>
+              <p class="text-[10px] text-amber-700 mt-0.5 font-medium">당월 방문 0~1회 미접촉/저활동처</p>
             </div>
-            <div id="listQReview" class="mt-2 space-y-1.5 max-h-[105px] overflow-y-auto custom-scrollbar pr-1"></div>
-          </div>
-
-          <!-- Q4: 잠자는 처 / 미개척처 -->
-          <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                  <span>💤</span> 잠자는 처 / 미개척
-                </span>
-                <span id="badgeQSleep" class="px-1.5 py-0.2 rounded text-[10px] font-extrabold bg-slate-200 text-slate-700">0곳</span>
-              </div>
-              <p class="text-[10px] text-slate-500 mt-0.5 font-medium">방문 및 당월 실적 미흡 (신규 불씨 점화 필요)</p>
-            </div>
-            <div id="listQSleep" class="mt-2 space-y-1.5 max-h-[105px] overflow-y-auto custom-scrollbar pr-1"></div>
+            <div id="listQNeedVisit" class="mt-2 space-y-1.5 max-h-[110px] overflow-y-auto custom-scrollbar pr-1"></div>
           </div>
         </div>
       </div>
@@ -331,6 +331,7 @@
         "class": "핵심",
         "lastDate": "9월 8일",
         "visits": 1,
+        "activeUsers": 0,
         "bojang": [
           843520.0,
           571730.0,
@@ -351,6 +352,7 @@
         "class": "핵심",
         "lastDate": "9월 7일",
         "visits": 1,
+        "activeUsers": 0,
         "bojang": [
           274446.0,
           152940.0,
@@ -371,6 +373,7 @@
         "class": "핵심",
         "lastDate": "9월 17일",
         "visits": 2,
+        "activeUsers": 2,
         "bojang": [
           389160.0,
           335574.0,
@@ -391,6 +394,7 @@
         "class": "핵심",
         "lastDate": "9월 10일",
         "visits": 2,
+        "activeUsers": 6,
         "bojang": [
           1079783.0,
           4122635.0,
@@ -411,6 +415,7 @@
         "class": "핵심",
         "lastDate": "9월 14일",
         "visits": 2,
+        "activeUsers": 5,
         "bojang": [
           1064705.0,
           967044.0,
@@ -431,6 +436,7 @@
         "class": "전략",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           0.0,
           0.0,
@@ -451,6 +457,7 @@
         "class": "전략",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 2,
         "bojang": [
           47055.0,
           290801.0,
@@ -471,6 +478,7 @@
         "class": "핵심",
         "lastDate": "9월 15일",
         "visits": 4,
+        "activeUsers": 2,
         "bojang": [
           331344.0,
           301412.0,
@@ -491,6 +499,7 @@
         "class": "핵심",
         "lastDate": "9월 15일",
         "visits": 4,
+        "activeUsers": 2,
         "bojang": [
           223221.0,
           195743.0,
@@ -511,6 +520,7 @@
         "class": "전략",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 1,
         "bojang": [
           556557.0,
           121477.0,
@@ -531,6 +541,7 @@
         "class": "전략",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           0.0,
           0.0,
@@ -551,6 +562,7 @@
         "class": "핵심",
         "lastDate": "9월 15일",
         "visits": 2,
+        "activeUsers": 1,
         "bojang": [
           542971.0,
           267947.0,
@@ -571,6 +583,7 @@
         "class": "핵심",
         "lastDate": "9월 17일",
         "visits": 7,
+        "activeUsers": 10,
         "bojang": [
           4840343.0,
           3201257.0,
@@ -591,6 +604,7 @@
         "class": "전략",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           54537.0,
           0.0,
@@ -611,6 +625,7 @@
         "class": "일반",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 2,
         "bojang": [
           0.0,
           0.0,
@@ -636,6 +651,7 @@
         "class": "핵심",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           0.0,
           0.0,
@@ -656,6 +672,7 @@
         "class": "핵심",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 3,
         "bojang": [
           901590.0,
           644744.0,
@@ -676,6 +693,7 @@
         "class": "핵심",
         "lastDate": "9월 17일",
         "visits": 5,
+        "activeUsers": 9,
         "bojang": [
           1344567.0,
           2107001.0,
@@ -696,6 +714,7 @@
         "class": "전략",
         "lastDate": "9월 17일",
         "visits": 6,
+        "activeUsers": 5,
         "bojang": [
           2004167.0,
           2370945.0,
@@ -716,6 +735,7 @@
         "class": "전략",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 2,
         "bojang": [
           153280.0,
           0.0,
@@ -736,6 +756,7 @@
         "class": "개별",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           0.0,
           0.0,
@@ -756,6 +777,7 @@
         "class": "개별",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           37487.0,
           0.0,
@@ -776,6 +798,7 @@
         "class": "개별",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           0.0,
           0.0,
@@ -796,6 +819,7 @@
         "class": "전략",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           107777.0,
           30415.0,
@@ -816,6 +840,7 @@
         "class": "일반",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 3,
         "bojang": [
           403724.0,
           2099790.0,
@@ -836,6 +861,7 @@
         "class": "핵심",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           0.0,
           0.0,
@@ -856,6 +882,7 @@
         "class": "핵심",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           0.0,
           117204.0,
@@ -876,6 +903,7 @@
         "class": "개별",
         "lastDate": "9월 14일",
         "visits": 1,
+        "activeUsers": 4,
         "bojang": [
           1154114.0,
           22846849.0,
@@ -896,6 +924,7 @@
         "class": "개별",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 6,
         "bojang": [
           401203.0,
           64710.0,
@@ -916,6 +945,7 @@
         "class": "핵심",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           300000.0,
           0.0,
@@ -936,6 +966,7 @@
         "class": "핵심",
         "lastDate": "9월 7일",
         "visits": 1,
+        "activeUsers": 4,
         "bojang": [
           179658.0,
           331357.0,
@@ -956,6 +987,7 @@
         "class": "개별",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 1,
         "bojang": [
           1350000.0,
           0.0,
@@ -981,6 +1013,7 @@
         "class": "핵심",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 1,
         "bojang": [
           1301704.0,
           48419.0,
@@ -1001,6 +1034,7 @@
         "class": "개별",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           0.0,
           0.0,
@@ -1021,6 +1055,7 @@
         "class": "일반",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           80402.0,
           0.0,
@@ -1041,6 +1076,7 @@
         "class": "개별",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 1,
         "bojang": [
           0.0,
           0.0,
@@ -1061,6 +1097,7 @@
         "class": "전략",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           0.0,
           0.0,
@@ -1081,6 +1118,7 @@
         "class": "일반",
         "lastDate": "9월 17일",
         "visits": 3,
+        "activeUsers": 3,
         "bojang": [
           6285037.0,
           5070244.0,
@@ -1101,6 +1139,7 @@
         "class": "개별",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 9,
         "bojang": [
           4230977.0,
           3783690.0,
@@ -1121,6 +1160,7 @@
         "class": "핵심",
         "lastDate": "9월 4일",
         "visits": 1,
+        "activeUsers": 0,
         "bojang": [
           53936.0,
           0.0,
@@ -1141,6 +1181,7 @@
         "class": "개별",
         "lastDate": "9월 7일",
         "visits": 1,
+        "activeUsers": 11,
         "bojang": [
           7122945.0,
           3156017.0,
@@ -1161,6 +1202,7 @@
         "class": "개별",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           0.0,
           0.0,
@@ -1181,6 +1223,7 @@
         "class": "개별",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           0.0,
           168062.0,
@@ -1201,6 +1244,7 @@
         "class": "개별",
         "lastDate": "9월 16일",
         "visits": 2,
+        "activeUsers": 1,
         "bojang": [
           0.0,
           0.0,
@@ -1221,6 +1265,7 @@
         "class": "일반",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           0.0,
           0.0,
@@ -1241,6 +1286,7 @@
         "class": "핵심",
         "lastDate": "9월 15일",
         "visits": 5,
+        "activeUsers": 3,
         "bojang": [
           146020.0,
           741641.0,
@@ -1261,6 +1307,7 @@
         "class": "전략",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           423656.0,
           100000.0,
@@ -1281,6 +1328,7 @@
         "class": "-",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           0.0,
           0.0,
@@ -1301,6 +1349,7 @@
         "class": "일반",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           0.0,
           0.0,
@@ -1326,6 +1375,7 @@
         "class": "핵심",
         "lastDate": "9월 17일",
         "visits": 3,
+        "activeUsers": 1,
         "bojang": [
           768271.0,
           206537.0,
@@ -1346,6 +1396,7 @@
         "class": "핵심",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           0.0,
           0.0,
@@ -1366,6 +1417,7 @@
         "class": "개별",
         "lastDate": "9월 8일",
         "visits": 1,
+        "activeUsers": 1,
         "bojang": [
           0.0,
           94599.0,
@@ -1386,6 +1438,7 @@
         "class": "전략",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 1,
         "bojang": [
           0.0,
           110580.0,
@@ -1406,6 +1459,7 @@
         "class": "전략",
         "lastDate": "9월 14일",
         "visits": 1,
+        "activeUsers": 1,
         "bojang": [
           352198.0,
           404311.0,
@@ -1426,6 +1480,7 @@
         "class": "개별",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 3,
         "bojang": [
           37751.0,
           51499.0,
@@ -1446,6 +1501,7 @@
         "class": "전략",
         "lastDate": "9월 15일",
         "visits": 4,
+        "activeUsers": 2,
         "bojang": [
           749507.0,
           294854.0,
@@ -1466,6 +1522,7 @@
         "class": "개별",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 6,
         "bojang": [
           9685869.0,
           3453010.0,
@@ -1486,6 +1543,7 @@
         "class": "개별",
         "lastDate": "9월 10일",
         "visits": 2,
+        "activeUsers": 13,
         "bojang": [
           8519410.0,
           5590417.0,
@@ -1506,6 +1564,7 @@
         "class": "전략",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           80643.0,
           0.0,
@@ -1526,6 +1585,7 @@
         "class": "핵심",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 3,
         "bojang": [
           542024.0,
           390193.0,
@@ -1546,6 +1606,7 @@
         "class": "핵심",
         "lastDate": "9월 14일",
         "visits": 1,
+        "activeUsers": 1,
         "bojang": [
           39074.0,
           694091.0,
@@ -1566,6 +1627,7 @@
         "class": "핵심",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           0.0,
           0.0,
@@ -1586,6 +1648,7 @@
         "class": "전략",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 3,
         "bojang": [
           77758.0,
           0.0,
@@ -1606,6 +1669,7 @@
         "class": "전략",
         "lastDate": "9월 17일",
         "visits": 1,
+        "activeUsers": 0,
         "bojang": [
           100000.0,
           0.0,
@@ -1626,6 +1690,7 @@
         "class": "개별",
         "lastDate": "9월 9일",
         "visits": 1,
+        "activeUsers": 6,
         "bojang": [
           0,
           1301206.0,
@@ -1646,6 +1711,7 @@
         "class": "개별",
         "lastDate": "9월 14일",
         "visits": 3,
+        "activeUsers": 3,
         "bojang": [
           2641095.0,
           795116.0,
@@ -1666,6 +1732,7 @@
         "class": "일반",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 2,
         "bojang": [
           0.0,
           0.0,
@@ -1691,6 +1758,7 @@
         "class": "핵심",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           0.0,
           0.0,
@@ -1711,6 +1779,7 @@
         "class": "전략",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           0.0,
           0.0,
@@ -1731,6 +1800,7 @@
         "class": "전략",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           0.0,
           0.0,
@@ -1751,6 +1821,7 @@
         "class": "전략",
         "lastDate": "9월 17일",
         "visits": 7,
+        "activeUsers": 0,
         "bojang": [
           39606.0,
           0.0,
@@ -1771,6 +1842,7 @@
         "class": "전략",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           335524.0,
           0.0,
@@ -1791,6 +1863,7 @@
         "class": "전략",
         "lastDate": "9월 17일",
         "visits": 6,
+        "activeUsers": 1,
         "bojang": [
           0.0,
           0.0,
@@ -1811,6 +1884,7 @@
         "class": "전략",
         "lastDate": "9월 14일",
         "visits": 4,
+        "activeUsers": 0,
         "bojang": [
           96470.0,
           45330.0,
@@ -1831,6 +1905,7 @@
         "class": "개별",
         "lastDate": "9월 9일",
         "visits": 1,
+        "activeUsers": 3,
         "bojang": [
           2055200.0,
           3098147.0,
@@ -1851,6 +1926,7 @@
         "class": "개별",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           0.0,
           0.0,
@@ -1871,6 +1947,7 @@
         "class": "전략",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 2,
         "bojang": [
           747298.0,
           0.0,
@@ -1891,6 +1968,7 @@
         "class": "개별",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           0.0,
           0.0,
@@ -1911,6 +1989,7 @@
         "class": "개별",
         "lastDate": "9월 10일",
         "visits": 2,
+        "activeUsers": 5,
         "bojang": [
           0.0,
           234826.0,
@@ -1931,6 +2010,7 @@
         "class": "핵심",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 1,
         "bojang": [
           0.0,
           0.0,
@@ -1951,6 +2031,7 @@
         "class": "핵심",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           0.0,
           0.0,
@@ -1971,6 +2052,7 @@
         "class": "핵심",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           0.0,
           0.0,
@@ -1991,6 +2073,7 @@
         "class": "전략",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           0.0,
           0.0,
@@ -2011,6 +2094,7 @@
         "class": "전략",
         "lastDate": "-",
         "visits": 0,
+        "activeUsers": 0,
         "bojang": [
           0.0,
           0.0,
@@ -2224,28 +2308,110 @@
     }
 
     function renderQuadrantMatrix(agencies) {
-      // 기준값: 당월 실적 50만원, 방문 3회 이상
-      const REV_THRESHOLD = 500000;
-      const VISIT_THRESHOLD = 3;
+      // 1. 고능률 Br. (당월 실적 상위 3곳)
+      const topRevList = [...agencies]
+        .sort((a, b) => b[currentMetric][3] - a[currentMetric][3])
+        .slice(0, 3);
 
-      const qHighEff = [];  // 실적 높음 + 방문 적음 (< 3회)
-      const qCore = [];     // 실적 높음 + 방문 많음 (>= 3회)
-      const qReview = [];   // 실적 낮음 + 방문 많음 (>= 3회)
-      const qSleep = [];    // 실적 낮음 + 방문 적음 (< 3회)
-
-      agencies.forEach(a => {
+      const listQHighEff = document.getElementById('listQHighEff');
+      listQHighEff.innerHTML = '';
+      topRevList.forEach((a, idx) => {
         const rev = a[currentMetric][3];
-        const visits = a.visits;
+        const item = document.createElement('div');
+        item.className = "flex items-center justify-between text-[11px] bg-white/90 px-2 py-1.5 rounded-lg border border-slate-100 shadow-2xs";
+        item.innerHTML = `
+          <div class="flex items-center gap-1.5 min-w-0">
+            <span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-black flex items-center justify-center shrink-0">${idx + 1}</span>
+            <span class="font-bold text-slate-800 truncate">${a.name}</span>
+          </div>
+          <span class="font-bold text-emerald-700 shrink-0">${formatWon(rev)}</span>
+        `;
+        listQHighEff.appendChild(item);
+      });
 
-        if (rev >= REV_THRESHOLD && visits < VISIT_THRESHOLD) {
-          qHighEff.push(a);
-        } else if (rev >= REV_THRESHOLD && visits >= VISIT_THRESHOLD) {
-          qCore.push(a);
-        } else if (rev < REV_THRESHOLD && visits >= VISIT_THRESHOLD) {
-          qReview.push(a);
-        } else {
-          qSleep.push(a);
-        }
+      // 2. 가동인원 상위 Br. (가동인원 상위 3곳)
+      const topActiveUsersList = [...agencies]
+        .sort((a, b) => (b.activeUsers || 0) - (a.activeUsers || 0) || (b[currentMetric][3] - a[currentMetric][3]))
+        .slice(0, 3);
+
+      const listQActiveUsers = document.getElementById('listQActiveUsers');
+      listQActiveUsers.innerHTML = '';
+      topActiveUsersList.forEach((a, idx) => {
+        const users = a.activeUsers || (a[currentMetric][3] > 0 ? 1 : 0);
+        const item = document.createElement('div');
+        item.className = "flex items-center justify-between text-[11px] bg-white/90 px-2 py-1.5 rounded-lg border border-slate-100 shadow-2xs";
+        item.innerHTML = `
+          <div class="flex items-center gap-1.5 min-w-0">
+            <span class="w-4 h-4 rounded-full bg-sky-100 text-sky-800 text-[10px] font-black flex items-center justify-center shrink-0">${idx + 1}</span>
+            <span class="font-bold text-slate-800 truncate">${a.name}</span>
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <span class="text-[10px] px-1.5 py-0.5 rounded font-bold bg-sky-100 text-sky-700">${users}명 가동</span>
+            <span class="font-bold text-slate-700">${formatWon(a[currentMetric][3])}</span>
+          </div>
+        `;
+        listQActiveUsers.appendChild(item);
+      });
+
+      // 3. 전월 대비 급상승 Br. (8월 대비 9월 실적 증가액 TOP 3)
+      const topGrowthList = agencies
+        .map(a => ({
+          ...a,
+          diff: a[currentMetric][3] - a[currentMetric][2]
+        }))
+        .filter(a => a.diff > 0)
+        .sort((a, b) => b.diff - a.diff)
+        .slice(0, 3);
+
+      const listQGrowth = document.getElementById('listQGrowth');
+      listQGrowth.innerHTML = '';
+      if (topGrowthList.length === 0) {
+        listQGrowth.innerHTML = `<div class="py-4 text-center text-slate-400 text-[11px]">전월 대비 증가처 없음</div>`;
+      } else {
+        topGrowthList.forEach((a, idx) => {
+          const item = document.createElement('div');
+          item.className = "flex items-center justify-between text-[11px] bg-white/90 px-2 py-1.5 rounded-lg border border-slate-100 shadow-2xs";
+          item.innerHTML = `
+            <div class="flex items-center gap-1.5 min-w-0">
+              <span class="w-4 h-4 rounded-full bg-indigo-100 text-indigo-800 text-[10px] font-black flex items-center justify-center shrink-0">${idx + 1}</span>
+              <span class="font-bold text-slate-800 truncate">${a.name}</span>
+            </div>
+            <span class="font-bold text-indigo-700 shrink-0">▲ +${formatWon(a.diff)}</span>
+          `;
+          listQGrowth.appendChild(item);
+        });
+      }
+
+      // 4. 방문 필요 대리점 (방문횟수 0~1회 전체 목록)
+      const needVisitList = agencies
+        .filter(a => (a.visits === 0 || a.visits === 1))
+        .sort((a, b) => a.visits - b.visits || b[currentMetric][3] - a[currentMetric][3]);
+
+      const listQNeedVisit = document.getElementById('listQNeedVisit');
+      const badgeQNeedVisit = document.getElementById('badgeQNeedVisit');
+      badgeQNeedVisit.textContent = `${needVisitList.length}곳`;
+      listQNeedVisit.innerHTML = '';
+
+      if (needVisitList.length === 0) {
+        listQNeedVisit.innerHTML = `<div class="py-4 text-center text-slate-400 text-[11px]">모든 대리점 2회 이상 방문 완료! 🎉</div>`;
+      } else {
+        needVisitList.forEach(a => {
+          const rev = a[currentMetric][3];
+          const item = document.createElement('div');
+          item.className = "flex items-center justify-between text-[11px] bg-white/90 px-2 py-1.5 rounded-lg border border-slate-100 shadow-2xs";
+          item.innerHTML = `
+            <div class="flex items-center gap-1.5 min-w-0">
+              <span class="font-bold text-slate-800 truncate">${a.name}</span>
+              <span class="text-[9px] px-1 py-0.2 rounded font-bold ${a.visits === 0 ? 'bg-rose-100 text-rose-700' : 'bg-amber-100 text-amber-800'} shrink-0">
+                ${a.visits}회 방문
+              </span>
+            </div>
+            <span class="font-semibold text-slate-600 shrink-0">${rev > 0 ? formatWon(rev) : '0원'}</span>
+          `;
+          listQNeedVisit.appendChild(item);
+        });
+      }
+    }
       });
 
       const renderQuadrantList = (containerId, badgeId, list, badgeColor, isGoodRev) => {
