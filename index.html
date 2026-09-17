@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>신울산GA지점 설계팀장 활동 & 업적 분석 대시보드</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap');
     body {
@@ -47,7 +46,7 @@
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>실시간 9월 진도
             </span>
           </div>
-          <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">데이터 원천: 신울산_설계팀장_활동관련.xlsx (정리 시트) | 업데이트: 2026-09-17 19:27</p>
+          <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">데이터 원천: 신울산_설계팀장_활동관련.xlsx (정리 시트) | 업데이트: 2026-09-17 19:32</p>
         </div>
       </div>
 
@@ -134,36 +133,38 @@
       </div>
     </div>
 
-    <!-- Charts Section -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
-      <!-- Chart 1: 추이 비교 -->
-      <div class="lg:col-span-12 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm">
-        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-3 border-b border-slate-100 gap-2">
-          <div>
-            <h2 class="text-sm sm:text-base font-bold text-slate-900 flex items-center gap-2">
-              <span>📊 대리점별 실적 추이 비교</span>
-              <span id="chartMetricTag" class="text-[10px] sm:text-[11px] px-2 py-0.5 rounded-md bg-sky-50 text-sky-700 font-bold border border-sky-200">보장 기준</span>
-            </h2>
-            <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">전월 대비 증감 및 월별 실적 변동 현황</p>
-          </div>
-          <div class="flex flex-wrap items-center gap-2">
-            <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-[11px]">
-              <button id="btnViewFocus" onclick="setChartTimeView('focus')" class="px-2.5 py-1 font-bold rounded-lg shadow-sm bg-white text-sky-700 transition">
-                전월 vs 당월 비교 (추천)
-              </button>
-              <button id="btnViewAll" onclick="setChartTimeView('all')" class="px-2.5 py-1 font-medium rounded-lg text-slate-600 hover:text-slate-900 transition">
-                4개월 전체
-              </button>
-            </div>
-            <label class="inline-flex items-center cursor-pointer bg-slate-50 px-2.5 py-1 rounded-xl border border-slate-200 text-[11px] font-semibold text-slate-600 select-none">
-              <input type="checkbox" id="chkActiveOnly" onchange="toggleActiveOnly()" class="rounded text-sky-600 focus:ring-sky-500 mr-1.5 cursor-pointer">
-              <span>실적 발생처만 보기</span>
-            </label>
-          </div>
+    <!-- Section: 모바일 완벽 최적화 실적 랭킹 듀얼 게이지 뷰 (기존 깨지던 막대차트 대체) -->
+    <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-3.5 border-b border-slate-100 gap-2.5">
+        <div>
+          <h2 class="text-sm sm:text-base font-bold text-slate-900 flex items-center gap-2">
+            <span>📊 대리점별 실적 비교 및 증감 현황</span>
+            <span id="chartMetricTag" class="text-[10px] sm:text-[11px] px-2 py-0.5 rounded-md bg-sky-50 text-sky-700 font-bold border border-sky-200">보장 기준</span>
+          </h2>
+          <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">8월(전월) 대비 9월(당월) 실적 변동 및 순위</p>
         </div>
-        <div id="chartMonthlyBar" class="w-full h-[340px] sm:h-[400px] pt-2"></div>
+        
+        <div class="flex items-center justify-between sm:justify-end gap-2 text-xs">
+          <!-- 범례 표시 -->
+          <div class="flex items-center gap-3 bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-200 text-[11px]">
+            <span class="flex items-center gap-1 text-slate-500"><span class="w-2.5 h-2.5 rounded-full bg-slate-400 inline-block"></span>8월 실적</span>
+            <span class="flex items-center gap-1 text-sky-800 font-bold"><span class="w-2.5 h-2.5 rounded-full bg-sky-600 inline-block"></span>9월(당월)</span>
+          </div>
+          <label class="inline-flex items-center cursor-pointer bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-200 text-[11px] font-semibold text-slate-600 select-none">
+            <input type="checkbox" id="chkActiveOnly" onchange="toggleActiveOnly()" class="rounded text-sky-600 focus:ring-sky-500 mr-1.5 cursor-pointer">
+            <span>실적 발생처만</span>
+          </label>
+        </div>
       </div>
 
+      <!-- 모바일 가독성 100% 듀얼 게이지 리스트 컨테이너 -->
+      <div id="agencyGaugeList" class="mt-3.5 space-y-3 max-h-[460px] overflow-y-auto custom-scrollbar pr-1">
+        <!-- JS로 동적 생성 -->
+      </div>
+    </div>
+
+    <!-- 4분면 진단 카드 & 방문 필요 Br. 그리드 -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
       <!-- 4분면 진단 카드 -->
       <div class="lg:col-span-8 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
         <div class="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -172,7 +173,7 @@
               <span>🧭 활동 & 실적 전략 진단 보드</span>
               <span class="text-[10px] sm:text-[11px] px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 font-bold border border-indigo-200">영업 인사이트</span>
             </h2>
-            <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">고능률처, 인원가동처, 급성장처 및 방문 취약 대리점 집중 분석</p>
+            <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">고능률처, 인원가동처, 급성장처 및 방문 필요처 집중 분석</p>
           </div>
           <span class="text-[10px] sm:text-xs text-slate-400">당월 영업 진도 기준</span>
         </div>
@@ -2109,7 +2110,6 @@
 };
     let currentLeader = Object.keys(rawDataset)[0] || "";
     let currentMetric = "bojang";
-    let chartTimeView = "focus";
     let activeOnly = false;
 
     function initLeaderOptions() {
@@ -2147,25 +2147,10 @@
       updateDashboard();
     }
 
-    function setChartTimeView(view) {
-      chartTimeView = view;
-      const btnFocus = document.getElementById('btnViewFocus');
-      const btnAll = document.getElementById('btnViewAll');
-      if (view === 'focus') {
-        btnFocus.className = "px-2.5 py-1 font-bold rounded-lg shadow-sm bg-white text-sky-700 transition";
-        btnAll.className = "px-2.5 py-1 font-medium rounded-lg text-slate-600 hover:text-slate-900 transition";
-      } else {
-        btnAll.className = "px-2.5 py-1 font-bold rounded-lg shadow-sm bg-white text-sky-700 transition";
-        btnFocus.className = "px-2.5 py-1 font-medium rounded-lg text-slate-600 hover:text-slate-900 transition";
-      }
-      const data = rawDataset[currentLeader];
-      if (data) renderCharts(data.agencies);
-    }
-
     function toggleActiveOnly() {
       activeOnly = document.getElementById('chkActiveOnly').checked;
       const data = rawDataset[currentLeader];
-      if (data) renderCharts(data.agencies);
+      if (data) renderGaugeView(data.agencies);
     }
 
     function onLeaderChange(leader) {
@@ -2219,81 +2204,95 @@
       const efficiency = totalVisits > 0 ? totalM9 / totalVisits : totalM9;
       document.getElementById('kpiEfficiency').textContent = formatWon(efficiency);
 
-      renderCharts(agencies);
+      renderGaugeView(agencies);
+      renderQuadrantMatrix(agencies);
+      renderRiskAgencies(agencies);
       renderTable(agencies);
     }
 
-    function renderCharts(agencies) {
-      let filtered = [...agencies];
+    // 모바일 완벽 최적화 듀얼 게이지 리스트 렌더링 함수
+    function renderGaugeView(agencies) {
+      const container = document.getElementById('agencyGaugeList');
+      if (!container) return;
+      container.innerHTML = '';
+
+      let list = [...agencies];
       if (activeOnly) {
-        filtered = filtered.filter(a => a[currentMetric][3] > 0 || a[currentMetric][2] > 0);
+        list = list.filter(a => a[currentMetric][3] > 0 || a[currentMetric][2] > 0);
       }
 
-      const sorted = filtered.sort((a, b) => b[currentMetric][3] - a[currentMetric][3]);
-      
-      const agencyNames = sorted.map(a => a.name);
-      const m6Vals = sorted.map(a => a[currentMetric][0]);
-      const m7Vals = sorted.map(a => a[currentMetric][1]);
-      const m8Vals = sorted.map(a => a[currentMetric][2]);
-      const m9Vals = sorted.map(a => a[currentMetric][3]);
+      // 9월 실적 내림차순 정렬
+      list.sort((a, b) => b[currentMetric][3] - a[currentMetric][3] || b[currentMetric][2] - a[currentMetric][2]);
 
-      let barTraces = [];
-      if (chartTimeView === 'focus') {
-        barTraces = [
-          {
-            x: agencyNames,
-            y: m8Vals,
-            name: '8월 실적',
-            type: 'bar',
-            marker: { color: '#94a3b8' }
-          },
-          {
-            x: agencyNames,
-            y: m9Vals,
-            name: '9월(당월)',
-            type: 'bar',
-            marker: { color: '#0284c7' }
-          }
-        ];
-      } else {
-        barTraces = [
-          { x: agencyNames, y: m6Vals, name: '6월', type: 'bar', marker: { color: '#cbd5e1' } },
-          { x: agencyNames, y: m7Vals, name: '7월', type: 'bar', marker: { color: '#bae6fd' } },
-          { x: agencyNames, y: m8Vals, name: '8월', type: 'bar', marker: { color: '#38bdf8' } },
-          { x: agencyNames, y: m9Vals, name: '9월(당월)', type: 'bar', marker: { color: '#0369a1' } }
-        ];
-      }
-
-      const barLayout = {
-        barmode: 'group',
-        bargap: 0.25,
-        bargroupgap: 0.1,
-        dragmode: false,
-        margin: { l: 75, r: 20, t: 20, b: 90 },
-        legend: { orientation: 'h', y: 1.15, x: 0 },
-        xaxis: { 
-          tickangle: -35, 
-          tickfont: { size: 10, family: 'Pretendard', color: '#1e293b' },
-          fixedrange: true
-        },
-        yaxis: { 
-          ticksuffix: '원',
-          tickformat: ',.0f',
-          gridcolor: '#f1f5f9',
-          fixedrange: true
-        },
-        hovermode: 'x unified',
-        paper_bgcolor: 'transparent',
-        plot_bgcolor: 'transparent'
-      };
-      Plotly.newPlot('chartMonthlyBar', barTraces, barLayout, { 
-        responsive: true, 
-        displayModeBar: false, 
-        scrollZoom: false 
+      // 전체 대리점 중 8월 또는 9월 최고 실적값을 100% 기준으로 설정
+      let maxVal = 1;
+      list.forEach(a => {
+        if (a[currentMetric][3] > maxVal) maxVal = a[currentMetric][3];
+        if (a[currentMetric][2] > maxVal) maxVal = a[currentMetric][2];
       });
 
-      renderQuadrantMatrix(agencies);
-      renderRiskAgencies(agencies);
+      list.forEach((a, idx) => {
+        const m8 = a[currentMetric][2];
+        const m9 = a[currentMetric][3];
+        const diff = m9 - m8;
+
+        const pct8 = Math.min(100, Math.round((m8 / maxVal) * 100));
+        const pct9 = Math.min(100, Math.round((m9 / maxVal) * 100));
+
+        let diffBadge = "";
+        if (m8 === 0 && m9 === 0) {
+          diffBadge = `<span class="text-[10px] text-slate-400 font-medium">실적 없음</span>`;
+        } else if (diff > 0) {
+          diffBadge = `<span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">▲ +${formatWon(diff)}</span>`;
+        } else if (diff < 0) {
+          diffBadge = `<span class="text-[10px] font-bold text-rose-600 bg-rose-50 px-1.5 py-0.5 rounded border border-rose-200">▼ ${formatWon(Math.abs(diff))}</span>`;
+        } else {
+          diffBadge = `<span class="text-[10px] font-medium text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded">전월 동일</span>`;
+        }
+
+        const card = document.createElement('div');
+        card.className = "p-3 bg-slate-50/70 hover:bg-slate-100/80 rounded-xl border border-slate-200/80 transition flex flex-col gap-2";
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="w-5 h-5 rounded-full bg-slate-200 text-slate-700 text-[10px] font-black flex items-center justify-center shrink-0">${idx + 1}</span>
+              <span class="font-bold text-xs sm:text-sm text-slate-900 truncate">${a.name}</span>
+              <span class="text-[10px] px-1.5 py-0.2 rounded font-medium bg-white text-slate-500 border border-slate-200 shrink-0">${a.class}</span>
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0">
+              ${diffBadge}
+            </div>
+          </div>
+
+          <!-- 9월(당월) 바 & 금액 -->
+          <div class="space-y-1">
+            <div class="flex items-center justify-between text-[11px]">
+              <span class="text-sky-700 font-bold flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-sky-600 inline-block"></span>9월(당월)
+              </span>
+              <span class="font-extrabold text-sky-900 text-xs">${formatWon(m9)}</span>
+            </div>
+            <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
+              <div class="bg-sky-600 h-2.5 rounded-full transition-all duration-500" style="width: ${pct9}%"></div>
+            </div>
+          </div>
+
+          <!-- 8월(전월) 바 & 금액 -->
+          <div class="space-y-1">
+            <div class="flex items-center justify-between text-[10px] text-slate-500">
+              <span class="flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-slate-400 inline-block"></span>8월 실적
+              </span>
+              <span class="font-semibold text-slate-600">${formatWon(m8)}</span>
+            </div>
+            <div class="w-full bg-slate-200 rounded-full h-1.5 overflow-hidden">
+              <div class="bg-slate-400 h-1.5 rounded-full transition-all duration-500" style="width: ${pct8}%"></div>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
     }
 
     function renderQuadrantMatrix(agencies) {
