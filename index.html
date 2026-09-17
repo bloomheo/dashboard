@@ -46,7 +46,7 @@
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>실시간 9월 진도
             </span>
           </div>
-          <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">데이터 원천: 신울산_설계팀장_활동관련.xlsx (정리 시트) | 업데이트: 2026-09-17 19:33</p>
+          <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">데이터 원천: 신울산_설계팀장_활동관련.xlsx (정리 시트) | 업데이트: 2026-09-17 19:37</p>
         </div>
       </div>
 
@@ -120,16 +120,19 @@
         <div id="kpiTotalVisitsSub" class="text-[11px] sm:text-xs mt-1.5 text-slate-500 font-medium">9월 실적 발생 Br.</div>
       </div>
 
-      <!-- KPI 4: 활동 효율성 -->
+      <!-- KPI 4: 담당 Br. 방문 접촉률 (방문 커버리지) -->
       <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm">
         <div class="flex items-center justify-between text-slate-500 mb-1.5">
-          <span class="text-xs font-semibold">방문 1회당 평균 업적</span>
+          <span class="text-xs font-semibold">담당 Br. 방문 접촉률</span>
           <span class="p-1.5 bg-indigo-50 text-indigo-600 rounded-lg">
-            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
           </span>
         </div>
-        <div id="kpiEfficiency" class="text-lg sm:text-2xl font-black text-indigo-700 tracking-tight">0원</div>
-        <div class="text-[11px] sm:text-xs mt-1.5 text-slate-500 font-medium">활동 대비 실적 전환율</div>
+        <div class="flex items-baseline gap-1">
+          <span id="kpiVisitCoverageMain" class="text-lg sm:text-2xl font-black text-indigo-700 tracking-tight">0 / 0Br.</span>
+          <span id="kpiVisitCoverageRate" class="text-xs sm:text-sm font-bold text-indigo-600">(0%)</span>
+        </div>
+        <div id="kpiVisitCoverageSub" class="text-[11px] sm:text-xs mt-1.5 text-rose-500 font-semibold">미방문 0개처 잔여</div>
       </div>
     </div>
 
@@ -2167,6 +2170,7 @@
       let totalM9 = 0, totalM8 = 0, totalVisits = 0;
       let currActiveCount = 0;
       let prevActiveCount = 0;
+      let visitedAgenciesCount = 0;
 
       agencies.forEach(a => {
         const vals = a[currentMetric];
@@ -2179,6 +2183,7 @@
 
         if (m9Val > 0) currActiveCount++;
         if (m8Val > 0) prevActiveCount++;
+        if (a.visits > 0) visitedAgenciesCount++;
       });
 
       document.getElementById('kpiCurrentMonth').textContent = formatWon(totalM9);
@@ -2201,8 +2206,19 @@
       document.getElementById('kpiActiveRate').textContent = `(${activeRate}%)`;
       document.getElementById('kpiTotalVisitsSub').textContent = `9월 실적 발생 Br. (총 방문 ${totalVisits}회)`;
 
-      const efficiency = totalVisits > 0 ? totalM9 / totalVisits : totalM9;
-      document.getElementById('kpiEfficiency').textContent = formatWon(efficiency);
+      // KPI 4: 담당 Br. 방문 접촉률 (방문 커버리지)
+      const coverageRate = agencies.length > 0 ? Math.round((visitedAgenciesCount / agencies.length) * 100) : 0;
+      const unvisitedCount = agencies.length - visitedAgenciesCount;
+      document.getElementById('kpiVisitCoverageMain').textContent = `${visitedAgenciesCount} / ${agencies.length}Br.`;
+      document.getElementById('kpiVisitCoverageRate').textContent = `(${coverageRate}%)`;
+      const coverageSub = document.getElementById('kpiVisitCoverageSub');
+      if (unvisitedCount > 0) {
+        coverageSub.innerHTML = `미방문 <span class="font-bold text-rose-600">${unvisitedCount}개처 잔여</span> (집중 터치 필요)`;
+        coverageSub.className = "text-[11px] sm:text-xs mt-1.5 text-slate-500 font-medium";
+      } else {
+        coverageSub.innerHTML = `<span class="font-bold text-emerald-600">🎉 전 대리점 방문 완료!</span>`;
+        coverageSub.className = "text-[11px] sm:text-xs mt-1.5 text-emerald-600 font-medium";
+      }
 
       renderGaugeView(agencies);
       renderQuadrantMatrix(agencies);
