@@ -46,7 +46,7 @@
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>실시간 9월 진도
             </span>
           </div>
-          <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">데이터 원천: 신울산_설계팀장_활동관련.xlsx (정리 시트) | 업데이트: 2026-09-17 19:37</p>
+          <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">데이터 원천: 신울산_설계팀장_활동관련.xlsx (정리 시트) | 업데이트: 2026-09-17 19:40</p>
         </div>
       </div>
 
@@ -293,13 +293,10 @@
       </div>
 
       <div class="overflow-x-auto custom-scrollbar w-full">
-        <table class="w-full min-w-[840px] text-left border-collapse text-xs">
+        <table class="w-full min-w-[640px] text-left border-collapse text-xs">
           <thead>
             <tr class="bg-slate-100/80 border-b border-slate-200 text-slate-600 font-bold whitespace-nowrap">
               <th class="py-3 px-3.5 text-left">대리점명</th>
-              <th class="py-3 px-2 text-center">구분</th>
-              <th class="py-3 px-2 text-center">분류</th>
-              <th class="py-3 px-2.5 text-center">기관코드</th>
               <th class="py-3 px-3 text-center">최종활동</th>
               <th class="py-3 px-2.5 text-center">활동횟수</th>
               <th class="py-3 px-3 text-right">6월 실적</th>
@@ -2509,19 +2506,8 @@
           statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-500">미활동</span>`;
         }
 
-        const classColors = {
-          "핵심": "bg-sky-100 text-sky-800",
-          "전략": "bg-amber-100 text-amber-800",
-          "개별": "bg-emerald-100 text-emerald-800"
-        };
-
         tr.innerHTML = `
           <td class="py-2.5 px-3.5 font-bold text-slate-900">${a.name}</td>
-          <td class="py-2.5 px-2 text-center text-slate-500 font-mono font-medium">${a.type || '-'}</td>
-          <td class="py-2.5 px-2 text-center">
-            <span class="px-1.5 py-0.5 rounded text-[11px] font-bold ${classColors[a.class] || 'bg-slate-100 text-slate-700'}">${a.class}</span>
-          </td>
-          <td class="py-2.5 px-2.5 text-center text-slate-500 font-mono text-[11px]">${a.code || '-'}</td>
           <td class="py-2.5 px-3 text-center text-slate-600 font-medium">${a.lastDate || '-'}</td>
           <td class="py-2.5 px-2.5 text-center font-black ${a.visits > 0 ? 'text-sky-700' : 'text-slate-400'}">${a.visits}회</td>
           <td class="py-2.5 px-3 text-right text-slate-600 font-medium">${m[0].toLocaleString()}원</td>
@@ -2536,7 +2522,7 @@
       tfoot.innerHTML = `
         <tr class="text-slate-900 bg-slate-100/70">
           <td class="py-3 px-3.5 font-extrabold">합계 (${agencies.length}개처)</td>
-          <td colspan="4" class="text-center text-slate-500 text-xs font-semibold">총 활동 집계</td>
+          <td class="text-center text-slate-500 text-xs font-semibold">총 활동 집계</td>
           <td class="py-3 px-2.5 text-center text-sky-700 font-black text-sm">${sumVisits}회</td>
           <td class="py-3 px-3 text-right font-bold">${sum6.toLocaleString()}원</td>
           <td class="py-3 px-3 text-right font-bold">${sum7.toLocaleString()}원</td>
@@ -2562,10 +2548,10 @@
       const data = rawDataset[currentLeader];
       if (!data) return;
 
-      let csv = "대리점명,구분,분류,기관코드,최종활동일,방문횟수,6월실적,7월실적,8월실적,9월실적\n";
+      let csv = "대리점명,최종활동일,방문횟수,6월실적,7월실적,8월실적,9월실적\n";
       data.agencies.forEach(a => {
         const m = a[currentMetric];
-        csv += `"${a.name}","${a.type}","${a.class}","${a.code}","${a.lastDate}",${a.visits},${m[0]},${m[1]},${m[2]},${m[3]}\n`;
+        csv += `"${a.name}","${a.lastDate}",${a.visits},${m[0]},${m[1]},${m[2]},${m[3]}\n`;
       });
 
       const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
