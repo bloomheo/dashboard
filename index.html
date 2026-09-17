@@ -55,6 +55,12 @@
         <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 shadow-inner">
           <label for="leaderSelect" class="text-xs font-semibold px-2 text-slate-600">설계팀장:</label>
           <select id="leaderSelect" onchange="onLeaderChange(this.value)" class="bg-white text-xs sm:text-sm font-bold text-slate-800 border-0 rounded-lg py-1.5 pl-3 pr-7 shadow-sm focus:ring-2 focus:ring-sky-500 cursor-pointer">
+            <option value="차은미" selected>차은미 설계팀장</option>
+<option value="김서현" >김서현 설계팀장</option>
+<option value="김혜진" >김혜진 설계팀장</option>
+<option value="전현주" >전현주 설계팀장</option>
+<option value="강리안" >강리안 설계팀장</option>
+
           </select>
         </div>
 
@@ -117,6 +123,7 @@
         <div id="kpiTotalVisitsSub" class="text-[11px] sm:text-xs mt-1.5 text-slate-500 font-medium">9월 실적 발생 Br.</div>
       </div>
 
+      <!-- KPI 4: 담당 Br. 방문률 -->
       <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm">
         <div class="flex items-center justify-between text-slate-500 mb-1.5">
           <span class="text-xs font-semibold">담당 Br. 방문률</span>
@@ -128,11 +135,11 @@
           <span id="kpiVisitCoverageMain" class="text-lg sm:text-2xl font-black text-indigo-700 tracking-tight">0 / 0Br.</span>
           <span id="kpiVisitCoverageRate" class="text-xs sm:text-sm font-bold text-indigo-600">(0%)</span>
         </div>
-        <div id="kpiVisitCoverageSub" class="text-[11px] sm:text-xs mt-1.5 text-slate-500 font-medium">미방문 0개처 잔여</div>
+        <div id="kpiVisitCoverageSub" class="text-[11px] sm:text-xs mt-1.5 text-slate-500 font-medium">미방문 0개 잔여</div>
       </div>
     </div>
 
-    <!-- 듀얼 게이지 랭킹 뷰 -->
+    <!-- Section: 듀얼 게이지 랭킹 뷰 -->
     <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm">
       <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-3.5 border-b border-slate-100 gap-2.5">
         <div>
@@ -150,7 +157,7 @@
           </div>
           <label class="inline-flex items-center cursor-pointer bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-200 text-[11px] font-semibold text-slate-600 select-none">
             <input type="checkbox" id="chkActiveOnly" onchange="toggleActiveOnly()" class="rounded text-sky-600 focus:ring-sky-500 mr-1.5 cursor-pointer">
-            <span>실적 발생처만</span>
+            <span>실적 발생 Br. 만</span>
           </label>
         </div>
       </div>
@@ -159,7 +166,7 @@
       </div>
     </div>
 
-    <!-- 4분면 진단 카드 & 리스크 카드 -->
+    <!-- 4분면 진단 카드 & 방문 필요 Br. 그리드 -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
       <div class="lg:col-span-8 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
         <div class="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -238,7 +245,7 @@
                 <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">전월 대비 실적 급감 및 당월 공백 처</p>
               </div>
             </div>
-            <span id="riskCountBadge" class="text-[10px] sm:text-xs px-2 py-0.5 bg-rose-50 text-rose-700 rounded-full font-bold border border-rose-200">0개처</span>
+            <span id="riskCountBadge" class="text-[10px] sm:text-xs px-2 py-0.5 bg-rose-50 text-rose-700 rounded-full font-bold border border-rose-200">0개</span>
           </div>
           <div id="riskAgencyList" class="divide-y divide-slate-100 mt-2 max-h-[290px] sm:max-h-[310px] overflow-y-auto custom-scrollbar">
           </div>
@@ -303,27 +310,1488 @@
   </main>
 
   <script>
-    const rawDataset = {"차은미": {"role": "차은미 설계팀장", "agencies": [{"name": "GAK뉴에이스점", "type": "E", "class": "핵심", "lastDate": "9월 8일", "visits": 1, "activeUsers": 0, "bojang": [843520, 571730, 106330, 0], "health": [423520, 119730, 106330, 0]}, {"name": "GAK웰스투게더점", "type": "M", "class": "핵심", "lastDate": "9월 7일", "visits": 1, "activeUsers": 0, "bojang": [274446, 152940, 0, 0], "health": [274446, 152940, 0, 0]}, {"name": "GAK위드동행울산점", "type": "E", "class": "핵심", "lastDate": "9월 17일", "visits": 2, "activeUsers": 2, "bojang": [389160, 335574, 61610, 129831], "health": [89160, 235574, 61610, 129831]}, {"name": "GAK창솔점", "type": "M", "class": "핵심", "lastDate": "9월 10일", "visits": 2, "activeUsers": 6, "bojang": [1079783, 4122635, 1823521, 2453560], "health": [729783, 622635, 123521, 303560]}, {"name": "GAK혜안점", "type": "M", "class": "핵심", "lastDate": "9월 14일", "visits": 2, "activeUsers": 5, "bojang": [1064705, 967044, 2718236, 2138113], "health": [164705, 367044, 218236, 38113]}, {"name": "메타리치시온점", "type": "K", "class": "전략", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [0, 0, 0, 0], "health": [0, 0, 0, 0]}, {"name": "메타리치울산점", "type": "C", "class": "전략", "lastDate": "-", "visits": 0, "activeUsers": 2, "bojang": [47055, 290801, 0, 66847], "health": [47055, 83841, 0, 66847]}, {"name": "아너스금융서비스문수점", "type": "C", "class": "핵심", "lastDate": "9월 15일", "visits": 4, "activeUsers": 2, "bojang": [331344, 301412, 210435, 173630], "health": [331344, 301412, 210435, 173630]}, {"name": "아너스금융서비스신명점", "type": "E", "class": "핵심", "lastDate": "9월 15일", "visits": 4, "activeUsers": 2, "bojang": [223221, 195743, 437241, 361520], "health": [223221, 195743, 177241, 61520]}, {"name": "에이원금융판매다온점", "type": "C", "class": "전략", "lastDate": "-", "visits": 0, "activeUsers": 1, "bojang": [556557, 121477, 112067, 158064], "health": [556557, 121477, 112067, 158064]}, {"name": "에이원금융판매헷지자산관리점", "type": "S", "class": "전략", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [0, 0, 0, 0], "health": [0, 0, 0, 0]}, {"name": "유퍼스트울산중앙점", "type": "E", "class": "핵심", "lastDate": "9월 15일", "visits": 2, "activeUsers": 1, "bojang": [542971, 267947, 306869, 35158], "health": [142971, 267947, 56869, 35158]}, {"name": "케이지에이에셋태형점", "type": "M", "class": "핵심", "lastDate": "9월 17일", "visits": 7, "activeUsers": 10, "bojang": [4840343, 3201257, 3745056, 2312877], "health": [1434453, 2481797, 1245056, 412877]}, {"name": "프라임에셋울산18점", "type": "K", "class": "전략", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [54537, 0, 0, 0], "health": [54537, 0, 0, 0]}, {"name": "더베스트금융서비스글로벌울산드림", "type": "", "class": "대리점", "lastDate": "-", "visits": 0, "activeUsers": 2, "bojang": [0, 0, 0, 120912], "health": [0, 0, 0, 120912]}]}, "김서현": {"role": "김서현 설계팀장", "agencies": [{"name": "GAK씨엔원영남점", "type": "C", "class": "핵심", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [0, 0, 0, 0], "health": [0, 0, 0, 0]}, {"name": "GAK아이에프에스제이점", "type": "C", "class": "핵심", "lastDate": "-", "visits": 0, "activeUsers": 3, "bojang": [901590, 644744, 1004149, 647184], "health": [901590, 644744, 1004149, 647184]}, {"name": "GAK아이에프아이에스점", "type": "E", "class": "핵심", "lastDate": "9월 17일", "visits": 5, "activeUsers": 9, "bojang": [1344567, 2107001, 5551838, 590609], "health": [1244567, 1107001, 1251838, 590609]}, {"name": "글로벌금융판매드림재무점", "type": "M", "class": "전략", "lastDate": "9월 17일", "visits": 6, "activeUsers": 5, "bojang": [2004167, 2370945, 2764375, 841594], "health": [1404167, 1770945, 1044375, 41594]}, {"name": "글로벌금융판매바모스울산점", "type": "S", "class": "전략", "lastDate": "-", "visits": 0, "activeUsers": 2, "bojang": [153280, 0, 21765, 176227], "health": [153280, 0, 21764, 176227]}, {"name": "글로벌금융판매오에스케이더플러스점", "type": "S", "class": "개별", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [0, 0, 0, 0], "health": [0, 0, 0, 0]}, {"name": "글로벌금융판매오에스케이비오비점", "type": "S", "class": "개별", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [37487, 0, 186457, 0], "health": [37487, 0, 36457, 0]}, {"name": "글로벌금융판매오에스케이울산점", "type": "K", "class": "개별", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [0, 0, 0, 0], "health": [0, 0, 0, 0]}, {"name": "글로벌금융판매케이스타점", "type": "C", "class": "전략", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [107777, 30415, 300000, 0], "health": [107777, 30415, 0, 0]}, {"name": "삼성금융파트너부산지점", "type": "", "class": "대리점", "lastDate": "-", "visits": 0, "activeUsers": 3, "bojang": [403724, 2099790, 3000000, 1537906], "health": [403724, 99790, 0, 37906]}, {"name": "아너스금융서비스리더스점", "type": "K", "class": "핵심", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [0, 0, 0, 0], "health": [0, 0, 0, 0]}, {"name": "아너스금융서비스울산점", "type": "C", "class": "핵심", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [0, 117204, 102054, 0], "health": [0, 117204, 102054, 0]}, {"name": "아이에프씨웅상점", "type": "M", "class": "개별", "lastDate": "9월 14일", "visits": 1, "activeUsers": 4, "bojang": [1154114, 22846849, 4153418, 1392674], "health": [454114, 26849, 136418, 92674]}, {"name": "영진에셋성공점", "type": "E", "class": "개별", "lastDate": "-", "visits": 0, "activeUsers": 6, "bojang": [401203, 64710, 100204, 2131269], "health": [201203, 64710, 100204, 111829]}, {"name": "유퍼스트나우점", "type": "S", "class": "핵심", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [300000, 0, 0, 0], "health": [0, 0, 0, 0]}, {"name": "유퍼스트울산점", "type": "E", "class": "핵심", "lastDate": "9월 7일", "visits": 1, "activeUsers": 4, "bojang": [179658, 331357, 210705, 480862], "health": [179658, 131357, 210705, 180862]}, {"name": "피플라이프울산법인점", "type": "M", "class": "개별", "lastDate": "-", "visits": 0, "activeUsers": 1, "bojang": [1350000, 0, 250000, 350000], "health": [0, 0, 0, 0]}]}, "김혜진": {"role": "김혜진 설계팀장", "agencies": [{"name": "GAK다해에셋점", "type": "E", "class": "핵심", "lastDate": "-", "visits": 0, "activeUsers": 1, "bojang": [1301704, 48419, 34912, 104365], "health": [1301704, 48419, 34912, 104365]}, {"name": "굿리치웅상점", "type": "S", "class": "개별", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [0, 0, 0, 0], "health": [0, 0, 0, 0]}, {"name": "글로벌금융판매오에스케이목련", "type": "", "class": "대리점", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [80402, 0, 0, 0], "health": [80402, 0, 0, 0]}, {"name": "글로벌금융판매오에스케이양산점", "type": "S", "class": "개별", "lastDate": "-", "visits": 0, "activeUsers": 1, "bojang": [0, 0, 100000, 52798], "health": [0, 0, 100000, 52798]}, {"name": "글로벌금융판매케이에스두레울산평강점", "type": "K", "class": "전략", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [0, 0, 0, 0], "health": [0, 0, 0, 0]}, {"name": "삼성금융파트너스울산지점", "type": "", "class": "대리점", "lastDate": "9월 17일", "visits": 3, "activeUsers": 3, "bojang": [6285037, 5070244, 1066670, 8129073], "health": [257637, 42844, 31070, 86873]}, {"name": "스카이블루에셋남양산점", "type": "M", "class": "개별", "lastDate": "-", "visits": 0, "activeUsers": 9, "bojang": [4230977, 3783690, 4571099, 3846359], "health": [310977, 223690, 90099, 276359]}, {"name": "아너스금융서비스경상점", "type": "S", "class": "핵심", "lastDate": "9월 4일", "visits": 1, "activeUsers": 0, "bojang": [53936, 0, 0, 0], "health": [53936, 0, 0, 0]}, {"name": "아이에프씨양산점", "type": "M", "class": "개별", "lastDate": "9월 7일", "visits": 1, "activeUsers": 11, "bojang": [7122945, 3156017, 4026667, 3507933], "health": [567945, 956017, 1126667, 105323]}, {"name": "엠금융서비스다온점", "type": "C", "class": "개별", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [0, 0, 0, 0], "health": [0, 0, 0, 0]}, {"name": "엠금융서비스월드에셋점", "type": "K", "class": "개별", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [0, 168062, 0, 0], "health": [0, 168062, 0, 0]}, {"name": "영진에셋신울산점", "type": "C", "class": "개별", "lastDate": "9월 16일", "visits": 2, "activeUsers": 1, "bojang": [0, 0, 124266, 81328], "health": [0, 0, 74266, 81328]}, {"name": "케이지에이에셋더블유지유", "type": "", "class": "대리점", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [0, 0, 0, 0], "health": [0, 0, 0, 0]}, {"name": "케이지에이에셋문수점", "type": "E", "class": "핵심", "lastDate": "9월 15일", "visits": 5, "activeUsers": 3, "bojang": [146020, 741641, 381470, 231941], "health": [146020, 241641, 381470, 131941]}, {"name": "프라임에셋울산13점", "type": "K", "class": "전략", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [423656, 100000, 0, 0], "health": [123656, 0, 0, 0]}, {"name": "하나금융파인드울산점", "type": "K", "class": "-", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [0, 0, 0, 0], "health": [0, 0, 0, 0]}, {"name": "글로벌금융판매리치앤아이울산엠씨지사점", "type": "", "class": "대리점", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [0, 0, 0, 0], "health": [0, 0, 0, 0]}]}, "전현주": {"role": "전현주 설계팀장", "agencies": [{"name": "GAK플래쉬", "type": "E", "class": "핵심", "lastDate": "9월 17일", "visits": 3, "activeUsers": 1, "bojang": [768271, 206537, 439826, 50964], "health": [308271, 106537, 139826, 50964]}, {"name": "GAK하람점", "type": "E", "class": "핵심", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [0, 0, 700000, 0], "health": [0, 0, 0, 0]}, {"name": "글로벌금융판매오에스케이울산위드점", "type": "C", "class": "개별", "lastDate": "9월 8일", "visits": 1, "activeUsers": 1, "bojang": [0, 94599, 348991, 33475], "health": [0, 94599, 348991, 33475]}, {"name": "글로벌금융판매케이화이트점", "type": "C", "class": "전략", "lastDate": "-", "visits": 0, "activeUsers": 1, "bojang": [0, 110580, 1134675, 20752], "health": [0, 110580, 134675, 20752]}, {"name": "글로벌금융판매케이화이트일본부점", "type": "C", "class": "전략", "lastDate": "9월 14일", "visits": 1, "activeUsers": 1, "bojang": [352198, 404311, 321419, 330011], "health": [352198, 404311, 321419, 330011]}, {"name": "삼성금융파트너스김해지점", "type": "", "class": "개별", "lastDate": "-", "visits": 0, "activeUsers": 3, "bojang": [37751, 51499, 209848, 255422], "health": [37751, 51499, 209848, 255422]}, {"name": "메트라이프금융서비스대원점", "type": "E", "class": "전략", "lastDate": "9월 15일", "visits": 4, "activeUsers": 2, "bojang": [749507, 294854, 0, 101245], "health": [749507, 294854, 0, 101245]}, {"name": "스카이블루에셋양산점", "type": "M", "class": "개별", "lastDate": "-", "visits": 0, "activeUsers": 6, "bojang": [9685869, 3453010, 16601544, 3317488], "health": [817869, 193010, 101544, 297488]}, {"name": "스카이블루에셋웅상점", "type": "M", "class": "개별", "lastDate": "9월 10일", "visits": 2, "activeUsers": 13, "bojang": [8519410, 5590417, 5195822, 3414410], "health": [719410, 706117, 485822, 674410]}, {"name": "에이비에이금융서비스울산지사점", "type": "K", "class": "전략", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [80643, 0, 0, 0], "health": [80643, 0, 0, 0]}, {"name": "지에이스타금융서비스에스지에이점", "type": "M", "class": "핵심", "lastDate": "-", "visits": 0, "activeUsers": 3, "bojang": [542024, 390193, 222742, 275489], "health": [114024, 190193, 169882, 75489]}, {"name": "케이지에이에셋울산점", "type": "M", "class": "핵심", "lastDate": "9월 14일", "visits": 1, "activeUsers": 1, "bojang": [39074, 694091, 605667, 165990], "health": [39074, 194091, 105667, 165990]}, {"name": "케이지에이에셋튼튼점", "type": "E", "class": "핵심", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [0, 0, 0, 0], "health": [0, 0, 0, 0]}, {"name": "프라임에셋울산16점", "type": "E", "class": "전략", "lastDate": "-", "visits": 0, "activeUsers": 3, "bojang": [77758, 0, 382626, 226886], "health": [77758, 0, 382626, 226886]}, {"name": "프라임에셋울산1점", "type": "S", "class": "전략", "lastDate": "9월 17일", "visits": 1, "activeUsers": 0, "bojang": [100000, 0, 0, 0], "health": [0, 0, 0, 0]}, {"name": "한국보험금융제이어스울산지점", "type": "", "class": "개별", "lastDate": "9월 9일", "visits": 1, "activeUsers": 6, "bojang": [0, 1301206, 748893, 154443], "health": [0, 801206, 248893, 154443]}, {"name": "피플라이프울산브이아이피점", "type": "M", "class": "개별", "lastDate": "9월 14일", "visits": 3, "activeUsers": 3, "bojang": [2641095, 795116, 2116850, 140843], "health": [341095, 395116, 216850, 140843]}, {"name": "더베스트금융서비스유니온재무설계", "type": "", "class": "대리점", "lastDate": "-", "visits": 0, "activeUsers": 2, "bojang": [0, 0, 0, 139287], "health": [0, 0, 0, 139287]}]}, "강리안": {"role": "강리안 설계팀장", "agencies": [{"name": "GAK화정울산점", "type": "S", "class": "핵심", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [0, 0, 0, 0], "health": [0, 0, 0, 0]}, {"name": "글로벌금융판매웰스베스트점", "type": "K", "class": "전략", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [0, 0, 0, 0], "health": [0, 0, 0, 0]}, {"name": "더베스트금융서비스양산재무설계점", "type": "S", "class": "전략", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [0, 0, 0, 0], "health": [0, 0, 0, 0]}, {"name": "메타리치시그널9본부점", "type": "E", "class": "전략", "lastDate": "9월 17일", "visits": 7, "activeUsers": 0, "bojang": [39606, 0, 0, 0], "health": [39606, 0, 0, 0]}, {"name": "에이플러스에셋어드바이저영남골드점", "type": "C", "class": "전략", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [335524, 0, 0, 0], "health": [135524, 0, 0, 0]}, {"name": "메타리치위너점", "type": "K", "class": "전략", "lastDate": "9월 17일", "visits": 6, "activeUsers": 1, "bojang": [0, 0, 0, 169348], "health": [0, 0, 0, 169348]}, {"name": "메타리치컴패니언양산점", "type": "C", "class": "전략", "lastDate": "9월 14일", "visits": 4, "activeUsers": 0, "bojang": [96470, 45330, 0, 0], "health": [96470, 45330, 0, 0]}, {"name": "사랑모아금융서비스양산점", "type": "M", "class": "개별", "lastDate": "9월 9일", "visits": 1, "activeUsers": 3, "bojang": [2055200, 3098147, 1599897, 177638], "health": [110200, 238147, 199897, 177638]}, {"name": "밸류마크양산점", "type": "S", "class": "개별", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [0, 0, 0, 0], "health": [0, 0, 0, 0]}, {"name": "삼성화재금융서비스더프라임파트너점", "type": "E", "class": "전략", "lastDate": "-", "visits": 0, "activeUsers": 2, "bojang": [747298, 0, 266735, 63620], "health": [747298, 0, 266735, 63620]}, {"name": "엠금융서비스울산점", "type": "K", "class": "개별", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [0, 0, 0, 0], "health": [0, 0, 0, 0]}, {"name": "영진에셋양산점", "type": "E", "class": "개별", "lastDate": "9월 10일", "visits": 2, "activeUsers": 5, "bojang": [0, 234826, 82509, 1443699], "health": [0, 234826, 82509, 143699]}, {"name": "지에이스타금융서비스아이스마트점", "type": "E", "class": "핵심", "lastDate": "-", "visits": 0, "activeUsers": 1, "bojang": [0, 0, 0, 600000], "health": [0, 0, 0, 0]}, {"name": "케이지에이에셋방주양산점", "type": "C", "class": "핵심", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [0, 0, 0, 0], "health": [0, 0, 0, 0]}, {"name": "케이지에이에셋성산점", "type": "S", "class": "핵심", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [0, 0, 0, 0], "health": [0, 0, 0, 0]}, {"name": "프라임에셋울산14점", "type": "K", "class": "전략", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [0, 0, 0, 0], "health": [0, 0, 0, 0]}, {"name": "프라임에셋울산17점", "type": "K", "class": "전략", "lastDate": "-", "visits": 0, "activeUsers": 0, "bojang": [0, 0, 0, 0], "health": [0, 0, 0, 0]}]}};
-
-    let currentLeader = Object.keys(rawDataset)[0] || "";
+    const rawDataset = {
+  "차은미": {
+    "role": "차은미 설계팀장",
+    "agencies": [
+      {
+        "name": "GAK씨엔원영남점",
+        "code": "핵심",
+        "type": "17566",
+        "class": "8",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "GAK아이에프에스제이점",
+        "code": "핵심",
+        "type": "20574",
+        "class": "10",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 901590,
+        "bojang": [
+          6.0,
+          7.0,
+          5.0,
+          3.0
+        ],
+        "health": [
+          901590.0,
+          644744.0,
+          1004149.0,
+          647184.0
+        ]
+      },
+      {
+        "name": "GAK아이에프아이에스점",
+        "code": "핵심",
+        "type": "19968",
+        "class": "114",
+        "lastDate": "9월 17일",
+        "visits": 5,
+        "activeUsers": 1244567,
+        "bojang": [
+          20.0,
+          14.0,
+          19.0,
+          9.0
+        ],
+        "health": [
+          1344567.0,
+          2107001.0,
+          5551838.0,
+          590609.0
+        ]
+      },
+      {
+        "name": "글로벌금융판매드림재무점",
+        "code": "전략",
+        "type": "08032",
+        "class": "90",
+        "lastDate": "9월 17일",
+        "visits": 6,
+        "activeUsers": 1404167,
+        "bojang": [
+          12.0,
+          19.0,
+          16.0,
+          5.0
+        ],
+        "health": [
+          2004167.0,
+          2370945.0,
+          2764375.0,
+          841594.0
+        ]
+      },
+      {
+        "name": "글로벌금융판매바모스울산점",
+        "code": "전략",
+        "type": "19294",
+        "class": "11",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 153280,
+        "bojang": [
+          2.0,
+          0.0,
+          1.0,
+          2.0
+        ],
+        "health": [
+          153280.0,
+          0.0,
+          21765.0,
+          176227.0
+        ]
+      },
+      {
+        "name": "글로벌금융판매오에스케이더플러스점",
+        "code": "개별",
+        "type": "18902",
+        "class": "5",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "글로벌금융판매오에스케이비오비점",
+        "code": "개별",
+        "type": "18901",
+        "class": "12",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 37487,
+        "bojang": [
+          1.0,
+          0.0,
+          2.0,
+          0.0
+        ],
+        "health": [
+          37487.0,
+          0.0,
+          186457.0,
+          0.0
+        ]
+      },
+      {
+        "name": "글로벌금융판매오에스케이울산점",
+        "code": "개별",
+        "type": "12144",
+        "class": "11",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "글로벌금융판매케이스타점",
+        "code": "전략",
+        "type": "16015",
+        "class": "15",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 107777,
+        "bojang": [
+          1.0,
+          1.0,
+          1.0,
+          0.0
+        ],
+        "health": [
+          107777.0,
+          30415.0,
+          300000.0,
+          0.0
+        ]
+      },
+      {
+        "name": "삼성금융파트너부산지점",
+        "code": "",
+        "type": "21124",
+        "class": "56",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 403724,
+        "bojang": [
+          4.0,
+          4.0,
+          1.0,
+          3.0
+        ],
+        "health": [
+          403724.0,
+          2099790.0,
+          3000000.0,
+          1537906.0
+        ]
+      },
+      {
+        "name": "아너스금융서비스리더스점",
+        "code": "핵심",
+        "type": "19365",
+        "class": "3",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "아너스금융서비스울산점",
+        "code": "핵심",
+        "type": "16938",
+        "class": "5",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          1.0,
+          1.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          117204.0,
+          102054.0,
+          0.0
+        ]
+      },
+      {
+        "name": "아이에프씨웅상점",
+        "code": "개별",
+        "type": "13157",
+        "class": "28",
+        "lastDate": "9월 14일",
+        "visits": 1,
+        "activeUsers": 454114,
+        "bojang": [
+          7.0,
+          5.0,
+          12.0,
+          4.0
+        ],
+        "health": [
+          1154114.0,
+          22846849.0,
+          4153418.0,
+          1392674.0
+        ]
+      },
+      {
+        "name": "영진에셋성공점",
+        "code": "개별",
+        "type": "14781",
+        "class": "51",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 201203,
+        "bojang": [
+          4.0,
+          1.0,
+          1.0,
+          6.0
+        ],
+        "health": [
+          401203.0,
+          64710.0,
+          100204.0,
+          2131269.0
+        ]
+      },
+      {
+        "name": "유퍼스트나우점",
+        "code": "핵심",
+        "type": "08109",
+        "class": "6",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 0,
+        "bojang": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          300000.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "유퍼스트울산점",
+        "code": "핵심",
+        "type": "12859",
+        "class": "14",
+        "lastDate": "9월 7일",
+        "visits": 1,
+        "activeUsers": 179658,
+        "bojang": [
+          4.0,
+          3.0,
+          3.0,
+          4.0
+        ],
+        "health": [
+          179658.0,
+          331357.0,
+          210705.0,
+          480862.0
+        ]
+      },
+      {
+        "name": "피플라이프울산법인점",
+        "code": "개별",
+        "type": "17201",
+        "class": "16",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 0,
+        "bojang": [
+          1.0,
+          0.0,
+          1.0,
+          1.0
+        ],
+        "health": [
+          1350000.0,
+          0.0,
+          250000.0,
+          350000.0
+        ]
+      }
+    ]
+  },
+  "김서현": {
+    "role": "김서현 설계팀장",
+    "agencies": [
+      {
+        "name": "GAK다해에셋점",
+        "code": "핵심",
+        "type": "16289",
+        "class": "5",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 1301704,
+        "bojang": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "health": [
+          1301704.0,
+          48419.0,
+          34912.0,
+          104365.0
+        ]
+      },
+      {
+        "name": "굿리치웅상점",
+        "code": "개별",
+        "type": "19063",
+        "class": "8",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "글로벌금융판매오에스케이목련",
+        "code": "",
+        "type": "21305",
+        "class": "9",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 80402,
+        "bojang": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          80402.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "글로벌금융판매오에스케이양산점",
+        "code": "개별",
+        "type": "12705",
+        "class": "18",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          100000.0,
+          52798.0
+        ]
+      },
+      {
+        "name": "글로벌금융판매케이에스두레울산평강점",
+        "code": "전략",
+        "type": "20488",
+        "class": "4",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "삼성금융파트너스울산지점",
+        "code": "",
+        "type": "21126",
+        "class": "34",
+        "lastDate": "9월 17일",
+        "visits": 3,
+        "activeUsers": 257637,
+        "bojang": [
+          3.0,
+          3.0,
+          2.0,
+          3.0
+        ],
+        "health": [
+          6285037.0,
+          5070244.0,
+          1066670.0,
+          8129073.0
+        ]
+      },
+      {
+        "name": "스카이블루에셋남양산점",
+        "code": "개별",
+        "type": "14830",
+        "class": "44",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 310977,
+        "bojang": [
+          12.0,
+          6.0,
+          4.0,
+          9.0
+        ],
+        "health": [
+          4230977.0,
+          3783690.0,
+          4571099.0,
+          3846359.0
+        ]
+      },
+      {
+        "name": "아너스금융서비스경상점",
+        "code": "핵심",
+        "type": "16939",
+        "class": "27",
+        "lastDate": "9월 4일",
+        "visits": 1,
+        "activeUsers": 53936,
+        "bojang": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          53936.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "아이에프씨양산점",
+        "code": "개별",
+        "type": "12481",
+        "class": "38",
+        "lastDate": "9월 7일",
+        "visits": 1,
+        "activeUsers": 567945,
+        "bojang": [
+          17.0,
+          15.0,
+          15.0,
+          11.0
+        ],
+        "health": [
+          7122945.0,
+          3156017.0,
+          4026667.0,
+          3507933.0
+        ]
+      },
+      {
+        "name": "엠금융서비스다온점",
+        "code": "개별",
+        "type": "14392",
+        "class": "6",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "엠금융서비스월드에셋점",
+        "code": "개별",
+        "type": "14235",
+        "class": "16",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          168062.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "영진에셋신울산점",
+        "code": "개별",
+        "type": "11048",
+        "class": "27",
+        "lastDate": "9월 16일",
+        "visits": 2,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          2.0,
+          1.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          124266.0,
+          81328.0
+        ]
+      },
+      {
+        "name": "케이지에이에셋더블유지유",
+        "code": "",
+        "type": "21310",
+        "class": "2",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "케이지에이에셋문수점",
+        "code": "핵심",
+        "type": "08257",
+        "class": "9",
+        "lastDate": "9월 15일",
+        "visits": 5,
+        "activeUsers": 146020,
+        "bojang": [
+          1.0,
+          4.0,
+          5.0,
+          3.0
+        ],
+        "health": [
+          146020.0,
+          741641.0,
+          381470.0,
+          231941.0
+        ]
+      },
+      {
+        "name": "프라임에셋울산13점",
+        "code": "전략",
+        "type": "15147",
+        "class": "46",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 123656,
+        "bojang": [
+          3.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          423656.0,
+          100000.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "하나금융파인드울산점",
+        "code": "-",
+        "type": "18294",
+        "class": "9",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "글로벌금융판매리치앤아이울산엠씨지사점",
+        "code": "",
+        "type": "21552",
+        "class": "4",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    ]
+  },
+  "김혜진": {
+    "role": "김혜진 설계팀장",
+    "agencies": [
+      {
+        "name": "GAK플래쉬",
+        "code": "핵심",
+        "type": "16423",
+        "class": "13",
+        "lastDate": "9월 17일",
+        "visits": 3,
+        "activeUsers": 308271,
+        "bojang": [
+          7.0,
+          4.0,
+          4.0,
+          1.0
+        ],
+        "health": [
+          768271.0,
+          206537.0,
+          439826.0,
+          50964.0
+        ]
+      },
+      {
+        "name": "GAK하람점",
+        "code": "핵심",
+        "type": "16290",
+        "class": "12",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          700000.0,
+          0.0
+        ]
+      },
+      {
+        "name": "글로벌금융판매오에스케이울산위드점",
+        "code": "개별",
+        "type": "15668",
+        "class": "37",
+        "lastDate": "9월 8일",
+        "visits": 1,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          2.0,
+          2.0,
+          1.0
+        ],
+        "health": [
+          0.0,
+          94599.0,
+          348991.0,
+          33475.0
+        ]
+      },
+      {
+        "name": "글로벌금융판매케이화이트점",
+        "code": "전략",
+        "type": "15773",
+        "class": "9",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          1.0,
+          2.0,
+          1.0
+        ],
+        "health": [
+          0.0,
+          110580.0,
+          1134675.0,
+          20752.0
+        ]
+      },
+      {
+        "name": "글로벌금융판매케이화이트일본부점",
+        "code": "전략",
+        "type": "20061",
+        "class": "10",
+        "lastDate": "9월 14일",
+        "visits": 1,
+        "activeUsers": 352198,
+        "bojang": [
+          3.0,
+          2.0,
+          2.0,
+          1.0
+        ],
+        "health": [
+          352198.0,
+          404311.0,
+          321419.0,
+          330011.0
+        ]
+      },
+      {
+        "name": "삼성금융파트너스김해지점",
+        "code": "개별",
+        "type": "21125",
+        "class": "39",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 37751,
+        "bojang": [
+          2.0,
+          1.0,
+          3.0,
+          3.0
+        ],
+        "health": [
+          37751.0,
+          51499.0,
+          209848.0,
+          255422.0
+        ]
+      },
+      {
+        "name": "메트라이프금융서비스대원점",
+        "code": "전략",
+        "type": "15831",
+        "class": "48",
+        "lastDate": "9월 15일",
+        "visits": 4,
+        "activeUsers": 749507,
+        "bojang": [
+          4.0,
+          2.0,
+          0.0,
+          2.0
+        ],
+        "health": [
+          749507.0,
+          294854.0,
+          0.0,
+          101245.0
+        ]
+      },
+      {
+        "name": "스카이블루에셋양산점",
+        "code": "개별",
+        "type": "14829",
+        "class": "70",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 817869,
+        "bojang": [
+          19.0,
+          7.0,
+          5.0,
+          6.0
+        ],
+        "health": [
+          9685869.0,
+          3453010.0,
+          16601544.0,
+          3317488.0
+        ]
+      },
+      {
+        "name": "스카이블루에셋웅상점",
+        "code": "개별",
+        "type": "14831",
+        "class": "49",
+        "lastDate": "9월 10일",
+        "visits": 2,
+        "activeUsers": 719410,
+        "bojang": [
+          14.0,
+          12.0,
+          10.0,
+          13.0
+        ],
+        "health": [
+          8519410.0,
+          5590417.0,
+          5195822.0,
+          3414410.0
+        ]
+      },
+      {
+        "name": "에이비에이금융서비스울산지사점",
+        "code": "전략",
+        "type": "20494",
+        "class": "19",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 80643,
+        "bojang": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          80643.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "지에이스타금융서비스에스지에이점",
+        "code": "핵심",
+        "type": "16394",
+        "class": "59",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 114024,
+        "bojang": [
+          6.0,
+          5.0,
+          3.0,
+          3.0
+        ],
+        "health": [
+          542024.0,
+          390193.0,
+          222742.0,
+          275489.0
+        ]
+      },
+      {
+        "name": "케이지에이에셋울산점",
+        "code": "핵심",
+        "type": "14052",
+        "class": "23",
+        "lastDate": "9월 14일",
+        "visits": 1,
+        "activeUsers": 39074,
+        "bojang": [
+          1.0,
+          3.0,
+          2.0,
+          1.0
+        ],
+        "health": [
+          39074.0,
+          694091.0,
+          605667.0,
+          165990.0
+        ]
+      },
+      {
+        "name": "케이지에이에셋튼튼점",
+        "code": "핵심",
+        "type": "17360",
+        "class": "10",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "프라임에셋울산16점",
+        "code": "전략",
+        "type": "17044",
+        "class": "37",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 77758,
+        "bojang": [
+          3.0,
+          0.0,
+          4.0,
+          3.0
+        ],
+        "health": [
+          77758.0,
+          0.0,
+          382626.0,
+          226886.0
+        ]
+      },
+      {
+        "name": "프라임에셋울산1점",
+        "code": "전략",
+        "type": "07296",
+        "class": "14",
+        "lastDate": "9월 17일",
+        "visits": 1,
+        "activeUsers": 0,
+        "bojang": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          100000.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "한국보험금융제이어스울산지점",
+        "code": "개별",
+        "type": "21396",
+        "class": "6",
+        "lastDate": "9월 9일",
+        "visits": 1,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          6.0,
+          4.0,
+          6.0
+        ],
+        "health": [
+          0.0,
+          1301206.0,
+          748893.0,
+          154443.0
+        ]
+      },
+      {
+        "name": "피플라이프울산브이아이피점",
+        "code": "개별",
+        "type": "14615",
+        "class": "45",
+        "lastDate": "9월 14일",
+        "visits": 3,
+        "activeUsers": 341095,
+        "bojang": [
+          8.0,
+          4.0,
+          9.0,
+          3.0
+        ],
+        "health": [
+          2641095.0,
+          795116.0,
+          2116850.0,
+          140843.0
+        ]
+      },
+      {
+        "name": "더베스트금융서비스유니온재무설계",
+        "code": "",
+        "type": "21668",
+        "class": "6",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          2.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          139287.0
+        ]
+      }
+    ]
+  },
+  "전현주": {
+    "role": "전현주 설계팀장",
+    "agencies": [
+      {
+        "name": "GAK화정울산점",
+        "code": "핵심",
+        "type": "13486",
+        "class": "7",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "글로벌금융판매웰스베스트점",
+        "code": "전략",
+        "type": "18443",
+        "class": "5",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "더베스트금융서비스양산재무설계점",
+        "code": "전략",
+        "type": "19797",
+        "class": "13",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "메타리치시그널9본부점",
+        "code": "전략",
+        "type": "19792",
+        "class": "21",
+        "lastDate": "9월 17일",
+        "visits": 7,
+        "activeUsers": 39606,
+        "bojang": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          39606.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "에이플러스에셋어드바이저영남골드점",
+        "code": "전략",
+        "type": "18455",
+        "class": "20",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 135524,
+        "bojang": [
+          2.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          335524.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "메타리치위너점",
+        "code": "전략",
+        "type": "19790",
+        "class": "11",
+        "lastDate": "9월 17일",
+        "visits": 6,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          169348.0
+        ]
+      },
+      {
+        "name": "메타리치컴패니언양산점",
+        "code": "전략",
+        "type": "18616",
+        "class": "29",
+        "lastDate": "9월 14일",
+        "visits": 4,
+        "activeUsers": 96470,
+        "bojang": [
+          2.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          96470.0,
+          45330.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "사랑모아금융서비스양산점",
+        "code": "개별",
+        "type": "15696",
+        "class": "51",
+        "lastDate": "9월 9일",
+        "visits": 1,
+        "activeUsers": 110200,
+        "bojang": [
+          8.0,
+          7.0,
+          5.0,
+          3.0
+        ],
+        "health": [
+          2055200.0,
+          3098147.0,
+          1599897.0,
+          177638.0
+        ]
+      },
+      {
+        "name": "밸류마크양산점",
+        "code": "개별",
+        "type": "13068",
+        "class": "9",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "삼성화재금융서비스더프라임파트너점",
+        "code": "전략",
+        "type": "20373",
+        "class": "129",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 747298,
+        "bojang": [
+          11.0,
+          0.0,
+          6.0,
+          2.0
+        ],
+        "health": [
+          747298.0,
+          0.0,
+          266735.0,
+          63620.0
+        ]
+      },
+      {
+        "name": "엠금융서비스울산점",
+        "code": "개별",
+        "type": "18537",
+        "class": "2",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "영진에셋양산점",
+        "code": "개별",
+        "type": "02488",
+        "class": "80",
+        "lastDate": "9월 10일",
+        "visits": 2,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          3.0,
+          1.0,
+          5.0
+        ],
+        "health": [
+          0.0,
+          234826.0,
+          82509.0,
+          1443699.0
+        ]
+      },
+      {
+        "name": "지에이스타금융서비스아이스마트점",
+        "code": "핵심",
+        "type": "17474",
+        "class": "15",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          600000.0
+        ]
+      },
+      {
+        "name": "케이지에이에셋방주양산점",
+        "code": "핵심",
+        "type": "11795",
+        "class": "6",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "케이지에이에셋성산점",
+        "code": "핵심",
+        "type": "15177",
+        "class": "7",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "프라임에셋울산14점",
+        "code": "전략",
+        "type": "17051",
+        "class": "4",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "프라임에셋울산17점",
+        "code": "전략",
+        "type": "17052",
+        "class": "2",
+        "lastDate": "-",
+        "visits": 0,
+        "activeUsers": 0,
+        "bojang": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "health": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    ]
+  },
+  "강리안": {
+    "role": "강리안 설계팀장",
+    "agencies": []
+  }
+};
+    let currentLeader = "차은미";
     let currentMetric = "bojang";
     let activeOnly = false;
 
     function formatWon(num) {
       if (!num || isNaN(num)) return "0원";
       return Math.round(num).toLocaleString('ko-KR') + "원";
-    }
-
-    function initLeaderSelect() {
-      const select = document.getElementById('leaderSelect');
-      select.innerHTML = '';
-      Object.keys(rawDataset).forEach(leader => {
-        const opt = document.createElement('option');
-        opt.value = leader;
-        opt.textContent = leader + " 설계팀장";
-        if (leader === currentLeader) opt.selected = true;
-        select.appendChild(opt);
-      });
     }
 
     function setMetricType(metric) {
@@ -360,7 +1828,6 @@
       if (!data) return;
 
       const agencies = data.agencies;
-      
       let totalM9 = 0, totalM8 = 0, totalVisits = 0;
       let currActiveCount = 0;
       let prevActiveCount = 0;
@@ -406,7 +1873,7 @@
       document.getElementById('kpiVisitCoverageRate').textContent = `(${coverageRate}%)`;
       const coverageSub = document.getElementById('kpiVisitCoverageSub');
       if (unvisitedCount > 0) {
-        coverageSub.innerHTML = `미방문 <span class="font-bold text-rose-600">${unvisitedCount}개처 잔여</span> (집중 터치 필요)`;
+        coverageSub.innerHTML = `미방문 <span class="font-bold text-rose-600">${unvisitedCount}개 잔여</span> (집중 터치 필요)`;
         coverageSub.className = "text-[11px] sm:text-xs mt-1.5 text-slate-500 font-medium";
       } else {
         coverageSub.innerHTML = `<span class="font-bold text-emerald-600">🎉 전 대리점 방문 완료!</span>`;
@@ -464,7 +1931,7 @@
             <div class="flex items-center gap-2 min-w-0">
               <span class="w-5 h-5 rounded-full bg-slate-200 text-slate-700 text-[10px] font-black flex items-center justify-center shrink-0">${idx + 1}</span>
               <span class="font-bold text-xs sm:text-sm text-slate-900 truncate">${a.name}</span>
-              <span class="text-[10px] px-1.5 py-0.2 rounded font-medium bg-white text-slate-500 border border-slate-200 shrink-0">${a.class || '대리점'}</span>
+              <span class="text-[10px] px-1.5 py-0.2 rounded font-medium bg-white text-slate-500 border border-slate-200 shrink-0">${a.class}</span>
             </div>
             <div class="flex items-center gap-1.5 shrink-0">
               ${diffBadge}
@@ -627,7 +2094,7 @@
           return a.diff - b.diff;
         });
 
-      if (badge) badge.textContent = `${riskList.length}개처`;
+      if (badge) badge.textContent = `${riskList.length}개`;
 
       if (riskList.length === 0) {
         container.innerHTML = `
@@ -650,7 +2117,7 @@
           <div class="min-w-0 flex-1">
             <div class="flex items-center gap-1.5">
               <span class="font-bold text-xs text-slate-800 truncate">${a.name}</span>
-              <span class="text-[10px] px-1 py-0.2 rounded bg-slate-100 text-slate-500">${a.class || '대리점'}</span>
+              <span class="text-[10px] px-1 py-0.2 rounded bg-slate-100 text-slate-500">${a.class}</span>
             </div>
             <div class="text-[11px] text-slate-500 mt-0.5 flex items-center gap-2">
               <span>8월: <b class="text-slate-700">${Math.round(a.m8).toLocaleString()}원</b></span>
@@ -681,7 +2148,6 @@
         sum6 += m[0]; sum7 += m[1]; sum8 += m[2]; sum9 += m[3];
         sumVisits += a.visits;
 
-        // 최근 3개월(6, 7, 8월) 평균 대비 당월 증감 계산
         const avg3 = (m[0] + m[1] + m[2]) / 3;
         const diff = m[3] - avg3;
 
@@ -757,7 +2223,6 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      initLeaderSelect();
       updateDashboard();
     });
   </script>
