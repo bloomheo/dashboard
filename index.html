@@ -32,7 +32,7 @@
 
   <!-- Top Navigation Bar -->
   <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
       <div class="flex items-center space-x-3">
         <div class="w-10 h-10 rounded-xl bg-sky-600 flex items-center justify-center text-white shadow-md shadow-sky-200 shrink-0">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -46,7 +46,7 @@
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>실시간 9월 진도
             </span>
           </div>
-          <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">데이터 원천: 신울산_설계팀장_활동관련.xlsx (정리 시트) | 업데이트: 2026-09-18 07:35</p>
+          <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">데이터 원천: 신울산_설계팀장_활동관련.xlsx | 갱신: 2026-09-18 11:33</p>
         </div>
       </div>
 
@@ -55,6 +55,12 @@
         <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 shadow-inner">
           <label for="leaderSelect" class="text-xs font-semibold px-2 text-slate-600">설계팀장:</label>
           <select id="leaderSelect" onchange="onLeaderChange(this.value)" class="bg-white text-xs sm:text-sm font-bold text-slate-800 border-0 rounded-lg py-1.5 pl-3 pr-7 shadow-sm focus:ring-2 focus:ring-sky-500 cursor-pointer">
+            <option value="차은미" selected>차은미 설계팀장</option>
+<option value="김서현" >김서현 설계팀장</option>
+<option value="김혜진" >김혜진 설계팀장</option>
+<option value="전현주" >전현주 설계팀장</option>
+<option value="강리안" >강리안 설계팀장</option>
+
           </select>
         </div>
 
@@ -75,8 +81,8 @@
 
     <!-- KPI Summary Grid (4분할 1줄 구성) -->
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-      <!-- KPI 1: 당월 실적 -->
-      <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+      <!-- KPI 1: 9월 당월 실적 -->
+      <div class="bg-white p-3.5 sm:p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
         <div class="flex items-center justify-between text-slate-500 mb-1.5">
           <span class="text-xs font-semibold">9월 당월 실적</span>
           <span class="p-1.5 bg-sky-50 text-sky-600 rounded-lg">
@@ -84,8 +90,8 @@
           </span>
         </div>
         <div id="kpiCurrentMonth" class="text-lg sm:text-2xl font-black text-slate-900 tracking-tight">0원</div>
-        <div id="kpiMoM" class="text-[11px] sm:text-xs mt-1.5 text-slate-500 flex items-center gap-1 font-medium">
-          <span>전월 대비</span>
+        <div id="kpiMoM" class="text-[10px] sm:text-xs mt-1.5 text-slate-500 flex items-center gap-1 font-medium whitespace-nowrap tracking-tight overflow-hidden">
+          <span>전월대비</span>
           <span class="font-bold text-rose-500">-</span>
         </div>
       </div>
@@ -105,7 +111,7 @@
         <div id="kpiPrevActiveSub" class="text-[11px] sm:text-xs mt-1.5 text-slate-500 font-medium">8월 실적 발생 Br.</div>
       </div>
 
-      <!-- KPI 3: 당월 Br. 가동률 -->
+      <!-- KPI 3: 당월 Br. 가동률 & 총 가동인원수 강조 -->
       <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm">
         <div class="flex items-center justify-between text-slate-500 mb-1.5">
           <span class="text-xs font-semibold">당월 Br. 가동률</span>
@@ -117,13 +123,15 @@
           <span id="kpiActiveAgenciesMain" class="text-lg sm:text-2xl font-black text-slate-900 tracking-tight">0 / 0Br.</span>
           <span id="kpiActiveRate" class="text-xs sm:text-sm font-bold text-sky-600">(0%)</span>
         </div>
-        <div id="kpiTotalVisitsSub" class="text-[11px] sm:text-xs mt-1.5 text-slate-500 font-medium">9월 실적 발생 Br.</div>
+        <div id="kpiTotalVisitsSub" class="text-[11px] sm:text-xs mt-1.5 font-bold text-amber-600 flex items-center gap-1">
+          <span>👥 총 가동인원: <b id="kpiTotalUsersBadge" class="text-amber-700">0명</b></span>
+        </div>
       </div>
 
-      <!-- KPI 4: 담당 Br. 방문 접촉률 (방문 커버리지) -->
+      <!-- KPI 4: 담당 Br. 방문률 -->
       <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm">
         <div class="flex items-center justify-between text-slate-500 mb-1.5">
-          <span class="text-xs font-semibold">담당 Br. 방문 접촉률</span>
+          <span class="text-xs font-semibold">담당 Br. 방문률</span>
           <span class="p-1.5 bg-indigo-50 text-indigo-600 rounded-lg">
             <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
           </span>
@@ -132,11 +140,11 @@
           <span id="kpiVisitCoverageMain" class="text-lg sm:text-2xl font-black text-indigo-700 tracking-tight">0 / 0Br.</span>
           <span id="kpiVisitCoverageRate" class="text-xs sm:text-sm font-bold text-indigo-600">(0%)</span>
         </div>
-        <div id="kpiVisitCoverageSub" class="text-[11px] sm:text-xs mt-1.5 text-rose-500 font-semibold">미방문 0개처 잔여</div>
+        <div id="kpiVisitCoverageSub" class="text-[11px] sm:text-xs mt-1.5 text-slate-500 font-medium">미방문 0개 잔여</div>
       </div>
     </div>
 
-    <!-- Section: 모바일 완벽 최적화 실적 랭킹 듀얼 게이지 뷰 (기존 깨지던 막대차트 대체) -->
+    <!-- Section: 모바일 랭킹 듀얼 게이지 뷰 (가동인원 배지 포함) -->
     <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm">
       <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-3.5 border-b border-slate-100 gap-2.5">
         <div>
@@ -148,27 +156,23 @@
         </div>
         
         <div class="flex items-center justify-between sm:justify-end gap-2 text-xs">
-          <!-- 범례 표시 -->
           <div class="flex items-center gap-3 bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-200 text-[11px]">
             <span class="flex items-center gap-1 text-slate-500"><span class="w-2.5 h-2.5 rounded-full bg-slate-400 inline-block"></span>8월 실적</span>
             <span class="flex items-center gap-1 text-sky-800 font-bold"><span class="w-2.5 h-2.5 rounded-full bg-sky-600 inline-block"></span>9월(당월)</span>
           </div>
           <label class="inline-flex items-center cursor-pointer bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-200 text-[11px] font-semibold text-slate-600 select-none">
             <input type="checkbox" id="chkActiveOnly" onchange="toggleActiveOnly()" class="rounded text-sky-600 focus:ring-sky-500 mr-1.5 cursor-pointer">
-            <span>실적 발생처만</span>
+            <span>실적 발생 Br. 만</span>
           </label>
         </div>
       </div>
 
-      <!-- 모바일 가독성 100% 듀얼 게이지 리스트 컨테이너 -->
       <div id="agencyGaugeList" class="mt-3.5 space-y-3 max-h-[460px] overflow-y-auto custom-scrollbar pr-1">
-        <!-- JS로 동적 생성 -->
       </div>
     </div>
 
-    <!-- 4분면 진단 카드 & 방문 필요 Br. 그리드 -->
+    <!-- 4분면 진단 카드 -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
-      <!-- 4분면 진단 카드 -->
       <div class="lg:col-span-8 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
         <div class="flex items-center justify-between pb-3 border-b border-slate-100">
           <div>
@@ -181,9 +185,7 @@
           <span class="text-[10px] sm:text-xs text-slate-400">당월 영업 진도 기준</span>
         </div>
 
-        <!-- 4분면 2x2 그리드 영역 -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
-          <!-- 카드 1: 고능률 Br. -->
           <div class="bg-emerald-50/60 border border-emerald-200/80 rounded-xl p-3 flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between">
@@ -197,7 +199,6 @@
             <div id="listQHighEff" class="mt-2 space-y-1.5 max-h-[110px] overflow-y-auto custom-scrollbar pr-1"></div>
           </div>
 
-          <!-- 카드 2: 가동인원 상위 Br. -->
           <div class="bg-sky-50/60 border border-sky-200/80 rounded-xl p-3 flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between">
@@ -211,7 +212,6 @@
             <div id="listQActiveUsers" class="mt-2 space-y-1.5 max-h-[110px] overflow-y-auto custom-scrollbar pr-1"></div>
           </div>
 
-          <!-- 카드 3: 전월 대비 급상승 Br. -->
           <div class="bg-indigo-50/60 border border-indigo-200/80 rounded-xl p-3 flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between">
@@ -225,7 +225,6 @@
             <div id="listQGrowth" class="mt-2 space-y-1.5 max-h-[110px] overflow-y-auto custom-scrollbar pr-1"></div>
           </div>
 
-          <!-- 카드 4: 방문 필요 Br. -->
           <div class="bg-amber-50/60 border border-amber-200/80 rounded-xl p-3 flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between">
@@ -241,7 +240,6 @@
         </div>
       </div>
 
-      <!-- Widget: 방문 필요 Br. (이탈/공백 위험) -->
       <div class="lg:col-span-4 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -252,7 +250,7 @@
                 <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">전월 대비 실적 급감 및 당월 공백 처</p>
               </div>
             </div>
-            <span id="riskCountBadge" class="text-[10px] sm:text-xs px-2 py-0.5 bg-rose-50 text-rose-700 rounded-full font-bold border border-rose-200">0개처</span>
+            <span id="riskCountBadge" class="text-[10px] sm:text-xs px-2 py-0.5 bg-rose-50 text-rose-700 rounded-full font-bold border border-rose-200">0개</span>
           </div>
           <div id="riskAgencyList" class="divide-y divide-slate-100 mt-2 max-h-[290px] sm:max-h-[310px] overflow-y-auto custom-scrollbar">
           </div>
@@ -264,7 +262,7 @@
       </div>
     </div>
 
-    <!-- Detailed Agency Table -->
+    <!-- Detailed Agency Table (가동인원 명확 배치) -->
     <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
       <div class="p-3.5 sm:p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/60">
         <div>
@@ -276,7 +274,7 @@
           </div>
           <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5 flex items-center gap-1">
             <span>9월 실적순 정렬</span>
-            <span class="text-sky-600 font-semibold sm:hidden">• 👉 좌우로 스크롤하여 전체 실적 확인</span>
+            <span class="text-sky-600 font-semibold sm:hidden">• 👉 좌우로 스크롤하여 가동인원 및 전체 실적 확인</span>
           </p>
         </div>
         <div class="flex items-center gap-2">
@@ -293,17 +291,18 @@
       </div>
 
       <div class="overflow-x-auto custom-scrollbar w-full">
-        <table class="w-full min-w-[640px] text-left border-collapse text-xs">
+        <table class="w-full min-w-[720px] text-left border-collapse text-xs">
           <thead>
             <tr class="bg-slate-100/80 border-b border-slate-200 text-slate-600 font-bold whitespace-nowrap">
               <th class="py-3 px-3.5 text-left">대리점명</th>
               <th class="py-3 px-3 text-center">최종활동</th>
+              <th class="py-3 px-2.5 text-center text-amber-700 bg-amber-50/70 font-black">가동인원</th>
               <th class="py-3 px-2.5 text-center">활동횟수</th>
               <th class="py-3 px-3 text-right">6월 실적</th>
               <th class="py-3 px-3 text-right">7월 실적</th>
               <th class="py-3 px-3 text-right">8월 실적</th>
               <th class="py-3 px-3.5 text-right font-extrabold text-sky-900 bg-sky-50/70">9월(당월)</th>
-              <th class="py-3 px-3 text-center">활동 상태</th>
+              <th class="py-3 px-3 text-center">3개월 평균 대비</th>
             </tr>
           </thead>
           <tbody id="agencyTableBody" class="divide-y divide-slate-100 whitespace-nowrap">
@@ -1689,13 +1688,13 @@
         "visits": 1,
         "activeUsers": 6,
         "bojang": [
-          0,
+          0.0,
           1301206.0,
           748893.0,
           154443.0
         ],
         "health": [
-          0,
+          0.0,
           801206.0,
           248893.0,
           154443.0
@@ -2108,21 +2107,9 @@
     ]
   }
 };
-    let currentLeader = Object.keys(rawDataset)[0] || "";
+    let currentLeader = "차은미";
     let currentMetric = "bojang";
     let activeOnly = false;
-
-    function initLeaderOptions() {
-      const select = document.getElementById('leaderSelect');
-      select.innerHTML = '';
-      Object.keys(rawDataset).forEach(leader => {
-        const opt = document.createElement('option');
-        opt.value = leader;
-        opt.textContent = leader + ' 설계팀장';
-        if (leader === currentLeader) opt.selected = true;
-        select.appendChild(opt);
-      });
-    }
 
     function formatWon(num) {
       if (!num || isNaN(num)) return "0원";
@@ -2163,8 +2150,7 @@
       if (!data) return;
 
       const agencies = data.agencies;
-      
-      let totalM9 = 0, totalM8 = 0, totalVisits = 0;
+      let totalM9 = 0, totalM8 = 0, totalVisits = 0, totalUsers = 0;
       let currActiveCount = 0;
       let prevActiveCount = 0;
       let visitedAgenciesCount = 0;
@@ -2177,6 +2163,7 @@
         totalM9 += m9Val;
         totalM8 += m8Val;
         totalVisits += a.visits;
+        totalUsers += (a.activeUsers || 0);
 
         if (m9Val > 0) currActiveCount++;
         if (m8Val > 0) prevActiveCount++;
@@ -2188,9 +2175,9 @@
       const momPct = totalM8 > 0 ? ((momDiff / totalM8) * 100).toFixed(1) : (totalM9 > 0 ? 100 : 0);
       const momEl = document.getElementById('kpiMoM');
       if (momDiff >= 0) {
-        momEl.innerHTML = `전월 대비 <span class="font-bold text-emerald-600 flex items-center">▲ ${formatWon(momDiff)} (+${momPct}%)</span>`;
+        momEl.innerHTML = `<span class="shrink-0 text-slate-500">전월대비</span> <span class="font-bold text-emerald-600 shrink-0">▲ ${formatWon(momDiff)} (+${momPct}%)</span>`;
       } else {
-        momEl.innerHTML = `전월 대비 <span class="font-bold text-rose-600 flex items-center">▼ ${formatWon(Math.abs(momDiff))} (${momPct}%)</span>`;
+        momEl.innerHTML = `<span class="shrink-0 text-slate-500">전월대비</span> <span class="font-bold text-rose-600 shrink-0">▼ ${formatWon(Math.abs(momDiff))} (${momPct}%)</span>`;
       }
 
       const prevActiveRate = agencies.length > 0 ? Math.round((prevActiveCount / agencies.length) * 100) : 0;
@@ -2201,16 +2188,17 @@
       const activeRate = agencies.length > 0 ? Math.round((currActiveCount / agencies.length) * 100) : 0;
       document.getElementById('kpiActiveAgenciesMain').textContent = `${currActiveCount} / ${agencies.length}Br.`;
       document.getElementById('kpiActiveRate').textContent = `(${activeRate}%)`;
-      document.getElementById('kpiTotalVisitsSub').textContent = `9월 실적 발생 Br. (총 방문 ${totalVisits}회)`;
+      
+      const badgeUsers = document.getElementById('kpiTotalUsersBadge');
+      if (badgeUsers) badgeUsers.textContent = `${totalUsers}명`;
 
-      // KPI 4: 담당 Br. 방문 접촉률 (방문 커버리지)
       const coverageRate = agencies.length > 0 ? Math.round((visitedAgenciesCount / agencies.length) * 100) : 0;
       const unvisitedCount = agencies.length - visitedAgenciesCount;
       document.getElementById('kpiVisitCoverageMain').textContent = `${visitedAgenciesCount} / ${agencies.length}Br.`;
       document.getElementById('kpiVisitCoverageRate').textContent = `(${coverageRate}%)`;
       const coverageSub = document.getElementById('kpiVisitCoverageSub');
       if (unvisitedCount > 0) {
-        coverageSub.innerHTML = `미방문 <span class="font-bold text-rose-600">${unvisitedCount}개처 잔여</span> (집중 터치 필요)`;
+        coverageSub.innerHTML = `미방문 <span class="font-bold text-rose-600">${unvisitedCount}개 잔여</span> (집중 터치 필요)`;
         coverageSub.className = "text-[11px] sm:text-xs mt-1.5 text-slate-500 font-medium";
       } else {
         coverageSub.innerHTML = `<span class="font-bold text-emerald-600">🎉 전 대리점 방문 완료!</span>`;
@@ -2223,7 +2211,6 @@
       renderTable(agencies);
     }
 
-    // 모바일 완벽 최적화 듀얼 게이지 리스트 렌더링 함수
     function renderGaugeView(agencies) {
       const container = document.getElementById('agencyGaugeList');
       if (!container) return;
@@ -2234,10 +2221,8 @@
         list = list.filter(a => a[currentMetric][3] > 0 || a[currentMetric][2] > 0);
       }
 
-      // 9월 실적 내림차순 정렬
       list.sort((a, b) => b[currentMetric][3] - a[currentMetric][3] || b[currentMetric][2] - a[currentMetric][2]);
 
-      // 전체 대리점 중 8월 또는 9월 최고 실적값을 100% 기준으로 설정
       let maxVal = 1;
       list.forEach(a => {
         if (a[currentMetric][3] > maxVal) maxVal = a[currentMetric][3];
@@ -2248,6 +2233,7 @@
         const m8 = a[currentMetric][2];
         const m9 = a[currentMetric][3];
         const diff = m9 - m8;
+        const users = a.activeUsers || 0;
 
         const pct8 = Math.min(100, Math.round((m8 / maxVal) * 100));
         const pct9 = Math.min(100, Math.round((m9 / maxVal) * 100));
@@ -2266,19 +2252,23 @@
         const card = document.createElement('div');
         card.className = "p-3 bg-slate-50/70 hover:bg-slate-100/80 rounded-xl border border-slate-200/80 transition flex flex-col gap-2";
 
+        const userBadge = users > 0
+          ? `<span class="text-[10px] px-1.5 py-0.5 rounded font-black bg-amber-100 text-amber-800 border border-amber-300/80 shrink-0">👥 ${users}명 가동</span>`
+          : `<span class="text-[10px] px-1.5 py-0.5 rounded font-medium bg-slate-100 text-slate-400 shrink-0">0명</span>`;
+
         card.innerHTML = `
           <div class="flex items-center justify-between gap-2">
-            <div class="flex items-center gap-2 min-w-0">
+            <div class="flex items-center gap-1.5 min-w-0">
               <span class="w-5 h-5 rounded-full bg-slate-200 text-slate-700 text-[10px] font-black flex items-center justify-center shrink-0">${idx + 1}</span>
               <span class="font-bold text-xs sm:text-sm text-slate-900 truncate">${a.name}</span>
               <span class="text-[10px] px-1.5 py-0.2 rounded font-medium bg-white text-slate-500 border border-slate-200 shrink-0">${a.class}</span>
             </div>
             <div class="flex items-center gap-1.5 shrink-0">
+              ${userBadge}
               ${diffBadge}
             </div>
           </div>
 
-          <!-- 9월(당월) 바 & 금액 -->
           <div class="space-y-1">
             <div class="flex items-center justify-between text-[11px]">
               <span class="text-sky-700 font-bold flex items-center gap-1">
@@ -2291,7 +2281,6 @@
             </div>
           </div>
 
-          <!-- 8월(전월) 바 & 금액 -->
           <div class="space-y-1">
             <div class="flex items-center justify-between text-[10px] text-slate-500">
               <span class="flex items-center gap-1">
@@ -2309,7 +2298,6 @@
     }
 
     function renderQuadrantMatrix(agencies) {
-      // 1. 고능률 Br. TOP 3
       const topRevList = [...agencies]
         .sort((a, b) => b[currentMetric][3] - a[currentMetric][3])
         .slice(0, 3);
@@ -2330,7 +2318,6 @@
         listQHighEff.appendChild(item);
       });
 
-      // 2. 가동인원 상위 Br. TOP 3
       const topActiveUsersList = [...agencies]
         .sort((a, b) => (b.activeUsers || 0) - (a.activeUsers || 0) || (b[currentMetric][3] - a[currentMetric][3]))
         .slice(0, 3);
@@ -2338,7 +2325,7 @@
       const listQActiveUsers = document.getElementById('listQActiveUsers');
       listQActiveUsers.innerHTML = '';
       topActiveUsersList.forEach((a, idx) => {
-        const users = a.activeUsers || (a[currentMetric][3] > 0 ? 1 : 0);
+        const users = a.activeUsers || 0;
         const item = document.createElement('div');
         item.className = "flex items-center justify-between text-[11px] bg-white/90 px-2 py-1.5 rounded-lg border border-slate-100 shadow-2xs";
         item.innerHTML = `
@@ -2354,7 +2341,6 @@
         listQActiveUsers.appendChild(item);
       });
 
-      // 3. 전월 대비 급상승 Br. TOP 3
       const topGrowthList = agencies
         .map(a => ({
           ...a,
@@ -2383,7 +2369,6 @@
         });
       }
 
-      // 4. 방문 필요 Br. (방문횟수 0~1회 전체 목록)
       const needVisitList = agencies
         .filter(a => (a.visits === 0 || a.visits === 1))
         .sort((a, b) => a.visits - b.visits || b[currentMetric][3] - a[currentMetric][3]);
@@ -2440,7 +2425,7 @@
           return a.diff - b.diff;
         });
 
-      if (badge) badge.textContent = `${riskList.length}개처`;
+      if (badge) badge.textContent = `${riskList.length}개`;
 
       if (riskList.length === 0) {
         container.innerHTML = `
@@ -2487,34 +2472,46 @@
 
       const sorted = [...agencies].sort((a, b) => b[currentMetric][3] - a[currentMetric][3]);
 
-      let sum6 = 0, sum7 = 0, sum8 = 0, sum9 = 0, sumVisits = 0;
+      let sum6 = 0, sum7 = 0, sum8 = 0, sum9 = 0, sumVisits = 0, sumUsers = 0;
 
       sorted.forEach(a => {
         const m = a[currentMetric];
+        const users = a.activeUsers || 0;
         sum6 += m[0]; sum7 += m[1]; sum8 += m[2]; sum9 += m[3];
         sumVisits += a.visits;
+        sumUsers += users;
+
+        const avg3 = (m[0] + m[1] + m[2]) / 3;
+        const diff = m[3] - avg3;
+
+        let trendBadge = "";
+        if (m[0] === 0 && m[1] === 0 && m[2] === 0 && m[3] === 0) {
+          trendBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 text-slate-400">-</span>`;
+        } else if (diff > 0) {
+          trendBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700 inline-flex items-center gap-0.5">▲ 상승</span>`;
+        } else if (diff < 0) {
+          trendBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-700 inline-flex items-center gap-0.5">▼ 하락</span>`;
+        } else {
+          trendBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 text-slate-500">- 유지</span>`;
+        }
+
+        const userCell = users > 0
+          ? `<span class="px-2 py-0.5 rounded-md font-black text-amber-800 bg-amber-100 border border-amber-300 text-[11px]">${users}명</span>`
+          : `<span class="text-slate-400 text-[11px]">-</span>`;
 
         const tr = document.createElement('tr');
         tr.className = "hover:bg-slate-50 transition border-b border-slate-100";
-        
-        let statusBadge = "";
-        if (a.visits >= 3) {
-          statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700">집중관리</span>`;
-        } else if (a.visits > 0) {
-          statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-100 text-sky-700">활동완료</span>`;
-        } else {
-          statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-500">미활동</span>`;
-        }
 
         tr.innerHTML = `
-          <td class="py-2.5 px-3.5 font-bold text-slate-900">${a.name}</td>
+          <td class="py-2.5 px-3.5 font-bold text-slate-900 max-w-[140px] truncate" title="${a.name}">${a.name}</td>
           <td class="py-2.5 px-3 text-center text-slate-600 font-medium">${a.lastDate || '-'}</td>
+          <td class="py-2.5 px-2.5 text-center bg-amber-50/50">${userCell}</td>
           <td class="py-2.5 px-2.5 text-center font-black ${a.visits > 0 ? 'text-sky-700' : 'text-slate-400'}">${a.visits}회</td>
           <td class="py-2.5 px-3 text-right text-slate-600 font-medium">${m[0].toLocaleString()}원</td>
           <td class="py-2.5 px-3 text-right text-slate-600 font-medium">${m[1].toLocaleString()}원</td>
           <td class="py-2.5 px-3 text-right text-slate-600 font-medium">${m[2].toLocaleString()}원</td>
           <td class="py-2.5 px-3.5 text-right font-extrabold text-sky-900 bg-sky-50/60">${m[3].toLocaleString()}원</td>
-          <td class="py-2.5 px-3 text-center">${statusBadge}</td>
+          <td class="py-2.5 px-3 text-center">${trendBadge}</td>
         `;
         tbody.appendChild(tr);
       });
@@ -2522,7 +2519,8 @@
       tfoot.innerHTML = `
         <tr class="text-slate-900 bg-slate-100/70">
           <td class="py-3 px-3.5 font-extrabold">합계 (${agencies.length}개처)</td>
-          <td class="text-center text-slate-500 text-xs font-semibold">총 활동 집계</td>
+          <td class="text-center text-slate-500 text-xs font-semibold">총 집계</td>
+          <td class="py-3 px-2.5 text-center text-amber-800 font-black text-xs bg-amber-100/60">${sumUsers}명</td>
           <td class="py-3 px-2.5 text-center text-sky-700 font-black text-sm">${sumVisits}회</td>
           <td class="py-3 px-3 text-right font-bold">${sum6.toLocaleString()}원</td>
           <td class="py-3 px-3 text-right font-bold">${sum7.toLocaleString()}원</td>
@@ -2548,10 +2546,10 @@
       const data = rawDataset[currentLeader];
       if (!data) return;
 
-      let csv = "대리점명,최종활동일,방문횟수,6월실적,7월실적,8월실적,9월실적\n";
+      let csv = "대리점명,최종활동일,가동인원,방문횟수,6월실적,7월실적,8월실적,9월실적\n";
       data.agencies.forEach(a => {
         const m = a[currentMetric];
-        csv += `"${a.name}","${a.lastDate}",${a.visits},${m[0]},${m[1]},${m[2]},${m[3]}\n`;
+        csv += `"${a.name}","${a.lastDate}",${a.activeUsers || 0},${a.visits},${m[0]},${m[1]},${m[2]},${m[3]}\n`;
       });
 
       const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
@@ -2564,7 +2562,6 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      initLeaderOptions();
       updateDashboard();
     });
   </script>
